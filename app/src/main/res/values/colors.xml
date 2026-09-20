@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Backgrounds -->
+    <color name="bg_dark_navy">#070D18</color>
+    <color name="bg_dark_gradient_start">#050A14</color>
+    <color name="bg_dark_gradient_end">#0A1426</color>
+    <color name="bg_glass_card">#CC0F1E36</color>
+    <color name="bg_glass_card_elevated">#E6142749</color>
+    <color name="bg_glass_stroke">#3338BDF8</color>
+    <color name="bg_glass_stroke_glow">#00E5FF</color>
+    <color name="bg_input_field">#B30A1426</color>
+    <color name="bg_input_stroke">#4000E5FF</color>
+
+    <!-- Brand & Accents -->
+    <color name="cyan_accent">#00E5FF</color>
+    <color name="cyan_glow">#38BDF8</color>
+    <color name="cyan_dim">#8000E5FF</color>
+    <color name="blue_primary">#00B0FF</color>
+    <color name="blue_gradient_start">#00E5FF</color>
+    <color name="blue_gradient_end">#0284C7</color>
+    <color name="purple_accent">#818CF8</color>
+    <color name="glass_nav_selected">#2600E5FF</color>
+    <color name="glass_glow_sky">#00E5FF</color>
+
+    <!-- Typography -->
+    <color name="text_white">#FFFFFF</color>
+    <color name="text_secondary">#94A3B8</color>
+    <color name="text_muted">#64748B</color>
+    <color name="text_hint">#475569</color>
+
+    <!-- Chat Bubbles -->
+    <color name="bubble_outgoing_start">#0284C7</color>
+    <color name="bubble_outgoing_end">#00B0FF</color>
+    <color name="bubble_outgoing_stroke">#80E0F7</color>
+    <color name="bubble_incoming">#D90F1E36</color>
+    <color name="bubble_incoming_stroke">#3338BDF8</color>
+
+    <!-- Statuses -->
+    <color name="status_online">#10B981</color>
+    <color name="status_offline">#64748B</color>
+    <color name="status_sent">#94A3B8</color>
+    <color name="status_delivered">#38BDF8</color>
+    <color name="status_read">#00D2FF</color>
+
+    <!-- Feedback & Alerts -->
+    <color name="error_red">#F87171</color>
+    <color name="red_accent">#EF4444</color>
+    <color name="success_green">#34D399</color>
+    <color name="warning_yellow">#FBBF24</color>
+    <color name="dark_surface">#0A1426</color>
+    <color name="dark_surface_card">#0F1E36</color>
+    <color name="cyan_glow_start">#1A00E5FF</color>
+
+    <!-- System -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="transparent">#00000000</color>
+    <color name="overlay_dim">#80000000</color>
+</resources>

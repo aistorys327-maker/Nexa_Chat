@@ -1,0 +1,13 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <path
+        android:fillColor="#8B5CF6"
+        android:pathData="M8,8h32c2.21,0 4,1.79 4,4v24c0,2.21 -1.79,4 -4,4H8c-2.21,0 -4,-1.79 -4,-4V12c0,-2.21 1.79,-4 4,-4z" />
+    <!-- D-pad & action buttons -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M16,18h-2v4h-4v2h4v4h2v-4h4v-2h-4z M33,20a2,2 0 1,1 -4,0 2,2 0 0,1 4,0z M37,25a2,2 0 1,1 -4,0 2,2 0 0,1 4,0z" />
+</vector>

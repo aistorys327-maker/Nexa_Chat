@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="4dp"
+    android:background="@drawable/bg_glass_card"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="12dp">
+
+    <!-- Contact Avatar -->
+    <FrameLayout
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/circle_avatar_placeholder">
+
+        <ImageView
+            android:id="@+id/ivContactAvatar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_person"
+            app:tint="@color/cyan_accent"
+            android:contentDescription="@null" />
+
+        <TextView
+            android:id="@+id/tvContactInitial"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:fontFamily="sans-serif-black"
+            android:textColor="@color/cyan_accent"
+            android:textSize="18sp"
+            android:visibility="gone"
+            tools:text="A" />
+    </FrameLayout>
+
+    <!-- Info Column -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="8dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvContactName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-bold"
+            android:textColor="@color/text_white"
+            android:textSize="15sp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            tools:text="Alexander Graham" />
+
+        <TextView
+            android:id="@+id/tvContactSubtext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/cyan_accent"
+            android:textSize="12sp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            tools:text="@alexander • +1 234 567 890" />
+    </LinearLayout>
+
+    <!-- On-App Actions: Call and Message -->
+    <LinearLayout
+        android:id="@+id/layoutOnAppActions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/btnContactCall"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@drawable/circle_avatar_placeholder"
+            android:padding="8dp"
+            android:src="@drawable/ic_call"
+            app:tint="@color/cyan_accent"
+            android:contentDescription="Voice Call" />
+
+        <ImageView
+            android:id="@+id/btnContactVideoCall"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/circle_avatar_placeholder"
+            android:padding="8dp"
+            android:src="@drawable/ic_videocam"
+            app:tint="@color/cyan_accent"
+            android:contentDescription="Video Call" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnContactMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/btn_primary_gradient"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:text="Chat"
+            android:textColor="@color/bg_dark_navy"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:backgroundTint="@null" />
+    </LinearLayout>
+
+    <!-- Not On App: Invite Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnContactInvite"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:background="@drawable/bg_glass_input"
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp"
+        android:text="@string/btn_invite"
+        android:textColor="@color/cyan_accent"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:backgroundTint="@null"
+        app:strokeColor="@color/cyan_accent"
+        app:strokeWidth="1dp" />
+
+</LinearLayout>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="end"
+    android:orientation="vertical"
+    android:paddingStart="48dp"
+    android:paddingTop="3dp"
+    android:paddingEnd="4dp"
+    android:paddingBottom="3dp">
+
+    <LinearLayout
+        android:id="@+id/bubbleOutgoing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bubble_outgoing"
+        android:orientation="vertical"
+        android:paddingStart="12dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="8dp">
+
+        <!-- Image Message Preview -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardOutgoingImage"
+            android:layout_width="220dp"
+            android:layout_height="180dp"
+            android:layout_marginBottom="6dp"
+            android:visibility="gone"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp">
+
+            <ImageView
+                android:id="@+id/ivOutgoingImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:contentDescription="Attached Image" />
+        </androidx.cardview.widget.CardView>
+
+        <!-- Voice Message Player -->
+        <LinearLayout
+            android:id="@+id/layoutOutgoingAudio"
+            android:layout_width="180dp"
+            android:layout_height="44dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/bg_glass_input"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/btnPlayOutgoingAudio"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_play"
+                app:tint="@color/cyan_accent"
+                android:contentDescription="Play Audio" />
+
+            <TextView
+                android:id="@+id/tvOutgoingAudioDuration"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:text="Voice Note"
+                android:textColor="@color/text_white"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- File Attachment View -->
+        <LinearLayout
+            android:id="@+id/layoutOutgoingFile"
+            android:layout_width="190dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/bg_glass_input"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_file"
+                app:tint="@color/cyan_accent"
+                android:contentDescription="File Attachment" />
+
+            <TextView
+                android:id="@+id/tvOutgoingFileName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="document.pdf"
+                android:textColor="@color/text_white"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- Text Message -->
+        <TextView
+            android:id="@+id/tvOutgoingMessageText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="280dp"
+            android:textColor="@color/text_white"
+            android:textSize="14sp"
+            tools:text="Sounds good! I'll see you at 4pm." />
+
+        <!-- Timestamp & Status Indicator -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="2dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvOutgoingTimestamp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/cyan_dim"
+                android:textSize="10sp"
+                tools:text="10:46 AM" />
+
+            <ImageView
+                android:id="@+id/ivOutgoingStatus"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/ic_double_check"
+                app:tint="@color/cyan_accent"
+                android:contentDescription="@null" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

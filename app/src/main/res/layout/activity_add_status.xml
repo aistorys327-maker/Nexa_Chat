@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_dark_gradient">
+
+    <!-- Top Bar -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/addStatusTopBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="16dp"
+        android:paddingTop="36dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="12dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/btnAddStatusBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="8dp"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/text_white" />
+
+        <TextView
+            android:id="@+id/tvAddStatusTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:fontFamily="sans-serif-black"
+            android:text="New Status"
+            android:textColor="@color/text_white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnAddStatusBack"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPostStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:background="@drawable/btn_primary_gradient"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="Post"
+            android:textColor="@color/bg_dark_navy"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            app:backgroundTint="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Expiry Banner Note -->
+    <LinearLayout
+        android:id="@+id/banner24h"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/bg_glass_card"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        app:layout_constraintTop_toBottomOf="@id/addStatusTopBar">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_update"
+            app:tint="@color/cyan_accent" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:text="Your status will be visible to all contacts and automatically disappear after 24 hours."
+            android:textColor="@color/cyan_accent"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <!-- Mode Selector: Text vs Photo -->
+    <LinearLayout
+        android:id="@+id/layoutStatusMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/banner24h">
+
+        <TextView
+            android:id="@+id/btnModeText"
+            android:layout_width="wrap_content"
+            android:layout_height="34dp"
+            android:background="@drawable/bg_pill_active"
+            android:gravity="center"
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+            android:text="Text Status"
+            android:textColor="@color/bg_dark_navy"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/btnModePhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="34dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/bg_pill_inactive"
+            android:gravity="center"
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+            android:text="Photo Status"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- TEXT STATUS CONTAINER -->
+    <FrameLayout
+        android:id="@+id/cardTextStatus"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_glass_card_elevated"
+        android:padding="20dp"
+        app:layout_constraintBottom_toTopOf="@id/colorPaletteLayout"
+        app:layout_constraintTop_toBottomOf="@id/layoutStatusMode">
+
+        <EditText
+            android:id="@+id/etStatusText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:hint="Type your status here..."
+            android:inputType="textMultiLine|textCapSentences"
+            android:maxLength="280"
+            android:textColor="@color/text_white"
+            android:textColorHint="@color/text_muted"
+            android:textSize="22sp" />
+    </FrameLayout>
+
+    <!-- Color Palette for Text Status -->
+    <LinearLayout
+        android:id="@+id/colorPaletteLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <View
+            android:id="@+id/colorSkyBlue"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_status_ring_active"
+            android:backgroundTint="#00B0FF" />
+
+        <View
+            android:id="@+id/colorDeepBlue"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_status_ring_active"
+            android:backgroundTint="#0284C7" />
+
+        <View
+            android:id="@+id/colorCyanNeon"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_status_ring_active"
+            android:backgroundTint="#00E5FF" />
+
+        <View
+            android:id="@+id/colorMidnight"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_status_ring_active"
+            android:backgroundTint="#0D1B36" />
+
+        <View
+            android:id="@+id/colorPurpleBlue"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_status_ring_active"
+            android:backgroundTint="#4F46E5" />
+    </LinearLayout>
+
+    <!-- PHOTO STATUS CONTAINER (Hidden by default) -->
+    <LinearLayout
+        android:id="@+id/cardPhotoStatus"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutStatusMode">
+
+        <FrameLayout
+            android:id="@+id/btnPickStatusPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_glass_card_elevated">
+
+            <ImageView
+                android:id="@+id/ivSelectedStatusPhoto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/layoutPhotoPlaceholder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_camera"
+                    app:tint="@color/cyan_accent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="sans-serif-bold"
+                    android:text="Tap to select photo"
+                    android:textColor="@color/text_white"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Choose an image from your gallery"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="11sp" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <!-- Caption Input -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_glass_input"
+            android:gravity="center_vertical"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp">
+
+            <EditText
+                android:id="@+id/etPhotoCaption"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:hint="Add a caption..."
+                android:inputType="textCapSentences"
+                android:textColor="@color/text_white"
+                android:textColorHint="@color/text_muted"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/pbPostingStatus"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:indeterminateTint="@color/cyan_accent"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

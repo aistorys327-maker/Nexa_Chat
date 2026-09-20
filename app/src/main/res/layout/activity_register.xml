@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@drawable/bg_dark_gradient">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="24dp"
+        android:paddingTop="36dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="36dp">
+
+        <ImageView
+            android:id="@+id/ivRegisterBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_glass_input"
+            android:contentDescription="@string/hint_password"
+            android:padding="8dp"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/text_white" />
+
+        <TextView
+            android:id="@+id/tvRegisterTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="sans-serif-black"
+            android:text="@string/title_create_account"
+            android:textColor="@color/text_white"
+            android:textSize="26sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivRegisterBack" />
+
+        <TextView
+            android:id="@+id/tvRegisterSubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/subtitle_register"
+            android:textColor="@color/cyan_accent"
+            android:textSize="13sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvRegisterTitle" />
+
+        <!-- Register Glass Card -->
+        <LinearLayout
+            android:id="@+id/cardRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_glass_card"
+            android:orientation="vertical"
+            android:padding="20dp"
+            app:layout_constraintTop_toBottomOf="@id/tvRegisterSubtitle">
+
+            <!-- Full Name -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hint_full_name"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/etRegisterFullName"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/bg_glass_input"
+                android:hint="Alex Mercer"
+                android:inputType="textPersonName"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textColor="@color/text_white"
+                android:textColorHint="@color/text_muted"
+                android:textSize="14sp" />
+
+            <!-- Username -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="@string/hint_username"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/etRegisterUsername"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/bg_glass_input"
+                android:hint="alexm"
+                android:inputType="textNoSuggestions"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textColor="@color/text_white"
+                android:textColorHint="@color/text_muted"
+                android:textSize="14sp" />
+
+            <!-- Phone Number -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="@string/hint_phone"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/etRegisterPhone"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/bg_glass_input"
+                android:hint="+1 234 567 8900 or 9876543210"
+                android:inputType="phone"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textColor="@color/text_white"
+                android:textColorHint="@color/text_muted"
+                android:textSize="14sp" />
+
+            <!-- Password / PIN -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="@string/hint_password"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="6dp">
+
+                <EditText
+                    android:id="@+id/etRegisterPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_glass_input"
+                    android:hint="Create 4-6 digit PIN or password"
+                    android:inputType="textPassword"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="48dp"
+                    android:textColor="@color/text_white"
+                    android:textColorHint="@color/text_muted"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/ivToggleRegPassword"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_marginEnd="6dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_visibility"
+                    app:tint="@color/text_secondary"
+                    android:contentDescription="@string/hint_password" />
+            </FrameLayout>
+
+            <!-- Confirm Password -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="@string/hint_confirm_password"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="6dp">
+
+                <EditText
+                    android:id="@+id/etRegisterConfirmPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_glass_input"
+                    android:hint="••••••••"
+                    android:inputType="textPassword"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="48dp"
+                    android:textColor="@color/text_white"
+                    android:textColorHint="@color/text_muted"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/ivToggleConfirmPassword"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_marginEnd="6dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_visibility"
+                    app:tint="@color/text_secondary"
+                    android:contentDescription="@string/hint_confirm_password" />
+            </FrameLayout>
+
+            <!-- Error Banner -->
+            <TextView
+                android:id="@+id/tvRegisterError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:textColor="@color/error_red"
+                android:textSize="12sp"
+                android:visibility="gone"
+                tools:text="Error message" />
+
+            <!-- Register Button -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="22dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnRegisterSubmit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/btn_primary_gradient"
+                    android:fontFamily="sans-serif-bold"
+                    android:text="@string/btn_register"
+                    android:textColor="@color/bg_dark_navy"
+                    android:textSize="15sp"
+                    app:backgroundTint="@null" />
+
+                <ProgressBar
+                    android:id="@+id/pbRegisterLoading"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_gravity="center"
+                    android:indeterminateTint="@color/bg_dark_navy"
+                    android:visibility="gone" />
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <!-- Back to Sign In -->
+        <TextView
+            android:id="@+id/tvGoToLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:padding="8dp"
+            android:text="@string/prompt_have_account"
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardRegister" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@drawable/bg_dark_gradient">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="20dp"
+        android:paddingTop="36dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="40dp">
+
+        <ImageView
+            android:id="@+id/btnSecurityBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="8dp"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/text_white"
+            android:contentDescription="@string/pref_security_settings" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="sans-serif-black"
+            android:text="@string/pref_security_settings"
+            android:textColor="@color/text_white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/btnSecurityBack"
+            app:layout_constraintStart_toEndOf="@id/btnSecurityBack"
+            app:layout_constraintTop_toTopOf="@id/btnSecurityBack" />
+
+        <!-- Biometric Card -->
+        <LinearLayout
+            android:id="@+id/cardBiometric"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/bg_glass_card"
+            android:orientation="vertical"
+            android:padding="18dp"
+            app:layout_constraintTop_toBottomOf="@id/btnSecurityBack">
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchBiometric"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Biometric Authentication"
+                android:textColor="@color/text_white"
+                android:textSize="15sp"
+                app:thumbTint="@color/cyan_accent"
+                app:trackTint="@color/bg_glass_stroke" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Use fingerprint or face recognition to unlock secured chats and protected apps."
+                android:textColor="@color/text_muted"
+                android:textSize="12sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnTestBiometric"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/btn_glass_secondary"
+                android:text="Test Biometric Prompt"
+                android:textColor="@color/cyan_accent"
+                android:textSize="12sp"
+                app:backgroundTint="@null" />
+        </LinearLayout>
+
+        <!-- PIN Card -->
+        <LinearLayout
+            android:id="@+id/cardPin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_glass_card"
+            android:orientation="vertical"
+            android:padding="18dp"
+            app:layout_constraintTop_toBottomOf="@id/cardBiometric">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-bold"
+                android:text="Security PIN Fallback"
+                android:textColor="@color/text_white"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="A 4-digit PIN is required as backup if biometrics fail or are unavailable."
+                android:textColor="@color/text_muted"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/etSecurityPin"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_glass_input"
+                android:gravity="center"
+                android:hint="Enter 4-digit PIN"
+                android:inputType="numberPassword"
+                android:maxLength="4"
+                android:textColor="@color/text_white"
+                android:textColorHint="@color/text_muted"
+                android:textSize="18sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSavePin"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/btn_primary_gradient"
+                android:fontFamily="sans-serif-bold"
+                android:text="Save Security PIN"
+                android:textColor="@color/bg_dark_navy"
+                app:backgroundTint="@null" />
+        </LinearLayout>
+
+        <!-- Status / Help -->
+        <TextView
+            android:id="@+id/tvSecurityStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/cyan_accent"
+            android:textSize="13sp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/cardPin"
+            tools:text="PIN updated successfully!" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

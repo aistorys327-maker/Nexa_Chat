@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_glass_card_elevated"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <ImageView
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_lock"
+        android:contentDescription="@null"
+        android:tint="@color/cyan_accent" />
+
+    <TextView
+        android:id="@+id/tvPinDialogTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:fontFamily="sans-serif-bold"
+        android:text="Security Verification"
+        android:textColor="@color/text_white"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tvPinDialogSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:text="Enter your NexaChat PIN to unlock"
+        android:textColor="@color/text_secondary"
+        android:textSize="13sp" />
+
+    <EditText
+        android:id="@+id/etPinDialogInput"
+        android:layout_width="160dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/bg_glass_input"
+        android:gravity="center"
+        android:hint="••••"
+        android:inputType="numberPassword"
+        android:letterSpacing="0.4"
+        android:maxLength="6"
+        android:textColor="@color/text_white"
+        android:textColorHint="@color/text_muted"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/tvPinDialogError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/error_red"
+        android:textSize="12sp"
+        android:visibility="gone" />
+
+</LinearLayout>

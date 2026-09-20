@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="4dp"
+    android:background="@drawable/bg_glass_card"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="12dp">
+
+    <!-- Avatar with 24h Glowing Sky-Blue Status Ring -->
+    <FrameLayout
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:background="@drawable/circle_status_ring_active"
+        android:padding="3dp">
+
+        <ImageView
+            android:id="@+id/ivStatusAvatar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_person"
+            app:tint="@color/cyan_accent" />
+
+        <TextView
+            android:id="@+id/tvStatusInitial"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:fontFamily="sans-serif-black"
+            android:textColor="@color/cyan_accent"
+            android:textSize="18sp"
+            android:visibility="gone"
+            tools:text="A" />
+    </FrameLayout>
+
+    <!-- Info Column -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvStatusUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-bold"
+            android:textColor="@color/text_white"
+            android:textSize="15sp"
+            tools:text="Jessica Miller" />
+
+        <TextView
+            android:id="@+id/tvStatusTimestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:textColor="@color/cyan_accent"
+            android:textSize="12sp"
+            tools:text="15 minutes ago" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/ic_play"
+        app:tint="@color/cyan_accent" />
+
+</LinearLayout>

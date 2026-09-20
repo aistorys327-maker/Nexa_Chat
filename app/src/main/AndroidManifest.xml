@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent>
+    </queries>
+
+    <application
+        android:name=".NexaChatApp"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.NexaChat">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Camouflage & App Disguise Gateway -->
+        <activity
+            android:name=".CamouflageGatewayActivity"
+            android:exported="true"
+            android:label="Calculator"
+            android:theme="@style/Theme.NexaChat" />
+
+        <!-- Activity Aliases for Dynamic Launcher Disguise -->
+        <activity-alias
+            android:name=".LauncherAliasCalculator"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@drawable/ic_disguise_calculator"
+            android:label="Calculator"
+            android:targetActivity=".CamouflageGatewayActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".LauncherAliasNotes"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@drawable/ic_disguise_notes"
+            android:label="Notes"
+            android:targetActivity=".CamouflageGatewayActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".LauncherAliasClock"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@drawable/ic_disguise_clock"
+            android:label="Clock"
+            android:targetActivity=".CamouflageGatewayActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".LauncherAliasGame"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@drawable/ic_disguise_game"
+            android:label="Game Space"
+            android:targetActivity=".CamouflageGatewayActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".LauncherAliasCustom"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@drawable/ic_disguise_custom"
+            android:label="App"
+            android:targetActivity=".CamouflageGatewayActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ForgotPasswordActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ChatActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".GroupChatActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".NewChatActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".CreateGroupActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".SecurityActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".MyAppsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".CallActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".StatusViewerActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".AddStatusActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- FileProvider for secure camera capture & file downloads -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.nexachat.app.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <!-- Disable FCM auto-initialization on startup to prevent hard failure exceptions when Play Services/FCM are unavailable -->
+        <meta-data
+            android:name="firebase_messaging_auto_init_enabled"
+            android:value="false" />
+        <meta-data
+            android:name="firebase_analytics_collection_deactivated"
+            android:value="true" />
+
+        <!-- Firebase Cloud Messaging Service -->
+        <service
+            android:name=".firebase.NexaFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+    </application>
+
+</manifest>

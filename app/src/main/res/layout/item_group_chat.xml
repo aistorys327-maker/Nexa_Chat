@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="4dp"
+    android:background="@drawable/bg_glass_card"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="14dp">
+
+    <!-- Group Avatar with glowing ring -->
+    <FrameLayout
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:background="@drawable/circle_status_ring_active"
+        android:padding="3dp">
+
+        <ImageView
+            android:id="@+id/ivGroupAvatar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_group"
+            app:tint="@color/cyan_accent" />
+
+        <TextView
+            android:id="@+id/tvGroupInitial"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:fontFamily="sans-serif-black"
+            android:textColor="@color/cyan_accent"
+            android:textSize="18sp"
+            android:visibility="gone"
+            tools:text="G" />
+    </FrameLayout>
+
+    <!-- Group Name & Last Message -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvGroupName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-bold"
+            android:textColor="@color/text_white"
+            android:textSize="16sp"
+            tools:text="Design Core Team" />
+
+        <TextView
+            android:id="@+id/tvGroupLastMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/text_secondary"
+            android:textSize="13sp"
+            tools:text="Alex: The blue glass UI looks fantastic!" />
+    </LinearLayout>
+
+    <!-- Time & Badge -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvGroupTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/cyan_accent"
+            android:textSize="11sp"
+            tools:text="12:45 PM" />
+
+        <TextView
+            android:id="@+id/tvGroupUnreadBadge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/bg_badge_unread"
+            android:gravity="center"
+            android:minWidth="20dp"
+            android:minHeight="20dp"
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp"
+            android:textColor="@color/bg_dark_navy"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            tools:text="3"
+            tools:visibility="visible" />
+    </LinearLayout>
+
+</LinearLayout>

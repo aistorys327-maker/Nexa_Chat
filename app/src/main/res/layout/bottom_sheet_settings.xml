@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_dark_gradient">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- Drag Handle -->
+        <View
+            android:layout_width="40dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_nav_tab_indicator" />
+
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:contentDescription="Settings"
+                android:src="@drawable/ic_settings"
+                app:tint="@color/cyan_accent" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-black"
+                android:text="Settings &amp; Privacy"
+                android:textColor="@color/text_white"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/btnCloseSettings"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:contentDescription="Close"
+                android:src="@drawable/ic_close"
+                app:tint="@color/text_secondary" />
+        </LinearLayout>
+
+        <!-- Profile Section Card -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cardProfileHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/bg_glass_card_elevated"
+            android:padding="16dp">
+
+            <!-- Profile Avatar Frame -->
+            <FrameLayout
+                android:id="@+id/frameSettingsAvatar"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/ivSettingsProfilePic"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_avatar_circle"
+                    android:contentDescription="Profile Picture"
+                    android:padding="2dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_person" />
+
+                <!-- Edit Camera Badge -->
+                <ImageView
+                    android:id="@+id/ivChangePhotoBadge"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_gravity="bottom|end"
+                    android:background="@drawable/bg_glass_card"
+                    android:contentDescription="Change Photo"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_camera"
+                    app:tint="@color/cyan_accent" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="8dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btnEditName"
+                app:layout_constraintStart_toEndOf="@id/frameSettingsAvatar"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tvSettingsFullName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-black"
+                    android:text="User Name"
+                    android:textColor="@color/text_white"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/tvSettingsUsername"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@username"
+                    android:textColor="@color/cyan_accent"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tvSettingsBio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="Hey there! I am using NexaChat."
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/btnEditName"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:contentDescription="Edit Profile"
+                android:padding="6dp"
+                android:src="@drawable/ic_edit"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/cyan_accent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- SECTION: PRIVACY & HIDE NUMBER -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-bold"
+            android:text="PRIVACY &amp; PHONE NUMBER"
+            android:textColor="@color/cyan_accent"
+            android:textSize="12sp" />
+
+        <!-- Hide Number Card -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_glass_card"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/ivHideNumberIcon"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:contentDescription="Hide Number"
+                android:src="@drawable/ic_phone_hidden"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/cyan_accent" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_marginEnd="12dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/switchHideNumber"
+                app:layout_constraintStart_toEndOf="@id/ivHideNumberIcon"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-bold"
+                    android:text="Hide Phone Number"
+                    android:textColor="@color/text_white"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tvPhoneNumberStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Number is visible to contacts"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/switchHideNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- SECTION: ADD APP (CAMOUFLAGE & FACE VAULT) -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-bold"
+            android:text="APP CAMOUFLAGE &amp; STEALTH DISGUISE"
+            android:textColor="@color/cyan_accent"
+            android:textSize="12sp" />
+
+        <!-- Add App Card -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cardAddAppCamouflage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_glass_card_elevated"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/ivDisguiseCardIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:contentDescription="Camouflage"
+                android:src="@drawable/ic_disguise_calculator"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_marginEnd="8dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/ivArrowCamouflage"
+                app:layout_constraintStart_toEndOf="@id/ivDisguiseCardIcon"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-bold"
+                    android:text="Add App (Stealth Disguise)"
+                    android:textColor="@color/text_white"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tvDisguiseCurrentBadge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Disguise as Calculator / App with Face Scan"
+                    android:textColor="@color/cyan_accent"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/ivArrowCamouflage"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="Open"
+                android:src="@drawable/ic_chevron_right"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/cyan_accent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- SECTION: BASIC FEATURES -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-bold"
+            android:text="BASIC CHAT &amp; SECURITY FEATURES"
+            android:textColor="@color/cyan_accent"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_glass_card"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Online Status Switch -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Online Status"
+                        android:textColor="@color/text_white"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Show when you are active"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/switchOnlineStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="#1AFFFFFF" />
+
+            <!-- Last Seen Switch -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Last Seen"
+                        android:textColor="@color/text_white"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Show your last active timestamp"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/switchLastSeen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="#1AFFFFFF" />
+
+            <!-- Read Receipts Switch -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Read Receipts"
+                        android:textColor="@color/text_white"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Show double checkmarks when messages are seen"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/switchReadReceipts"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="#1AFFFFFF" />
+
+            <!-- App Lock Biometrics Switch -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Biometric / App Lock"
+                        android:textColor="@color/text_white"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Require Face ID / Fingerprint to open app"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/switchAppLock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- PIN & Security Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnOpenSecuritySettings"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Configure Security PIN &amp; Locks"
+            android:textColor="@color/cyan_accent"
+            app:icon="@drawable/ic_lock"
+            app:iconTint="@color/cyan_accent"
+            app:strokeColor="@color/cyan_accent" />
+
+        <!-- Logout Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSettingsLogout"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="12dp"
+            android:fontFamily="sans-serif-bold"
+            android:text="Log Out"
+            android:textColor="@color/red_accent"
+            app:icon="@drawable/ic_logout"
+            app:iconTint="@color/red_accent" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

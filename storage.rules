@@ -1,0 +1,49 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Helper function to check if the user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Profile photos: Users can read all profile photos, but only upload their own (max 5MB, image only)
+    match /profile_photos/{userId}/{fileName} {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated() 
+                   && request.auth.uid == userId
+                   && request.resource.size < 5 * 1024 * 1024
+                   && request.resource.contentType.matches('image/.*');
+    }
+
+    // Chat images: Max 15MB, image only
+    match /chats/{chatId}/images/{fileName} {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated()
+                   && request.resource.size < 15 * 1024 * 1024
+                   && request.resource.contentType.matches('image/.*');
+    }
+
+    // Chat voice audio: Max 10MB, audio only
+    match /chats/{chatId}/audio/{fileName} {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated()
+                   && request.resource.size < 10 * 1024 * 1024
+                   && request.resource.contentType.matches('audio/.*');
+    }
+
+    // Chat documents/files: Max 25MB
+    match /chats/{chatId}/files/{fileName} {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated()
+                   && request.resource.size < 25 * 1024 * 1024;
+    }
+
+    // Group photos: Max 5MB, image only
+    match /groups/{groupId}/{fileName} {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated()
+                   && request.resource.size < 5 * 1024 * 1024
+                   && request.resource.contentType.matches('image/.*');
+    }
+  }
+}

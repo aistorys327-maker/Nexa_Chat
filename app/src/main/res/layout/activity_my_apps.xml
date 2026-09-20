@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_dark_gradient">
+
+    <!-- Top Bar -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/myAppsAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="16dp"
+        android:paddingTop="36dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="12dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/btnMyAppsBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="8dp"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/text_white"
+            android:contentDescription="@string/tab_my_apps" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnAddApp"
+            app:layout_constraintStart_toEndOf="@id/btnMyAppsBack"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-black"
+                android:text="@string/tab_my_apps"
+                android:textColor="@color/text_white"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tap to launch • Long-press to verify"
+                android:textColor="@color/cyan_accent"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/btnAddApp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="8dp"
+            android:src="@drawable/ic_add"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/cyan_accent"
+            android:contentDescription="Add Installed App" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Apps RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvMyApps"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/myAppsAppBar"
+        tools:listitem="@layout/item_app" />
+
+    <!-- Empty State -->
+    <LinearLayout
+        android:id="@+id/emptyAppsLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/myAppsAppBar">
+
+        <ImageView
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:src="@drawable/ic_apps"
+            app:tint="@color/cyan_dim"
+            android:contentDescription="@null" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="No Apps Added Yet"
+            android:textColor="@color/text_white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:text="Add your favorite apps or games to quickly launch them or secure them with NexaChat verification."
+            android:textColor="@color/text_secondary"
+            android:textSize="13sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnEmptyAddApp"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/btn_primary_gradient"
+            android:text="Add Installed App"
+            android:textColor="@color/bg_dark_navy"
+            android:textStyle="bold"
+            app:backgroundTint="@null" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

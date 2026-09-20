@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@drawable/bg_dark_gradient">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="20dp"
+        android:paddingTop="36dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="40dp">
+
+        <ImageView
+            android:id="@+id/btnSettingsBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="8dp"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/text_white"
+            android:contentDescription="@string/title_settings" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="sans-serif-black"
+            android:text="@string/title_settings"
+            android:textColor="@color/text_white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/btnSettingsBack"
+            app:layout_constraintStart_toEndOf="@id/btnSettingsBack"
+            app:layout_constraintTop_toTopOf="@id/btnSettingsBack" />
+
+        <!-- Privacy Section Card -->
+        <TextView
+            android:id="@+id/tvPrivacySection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:fontFamily="sans-serif-bold"
+            android:text="@string/section_privacy"
+            android:textColor="@color/cyan_accent"
+            android:textSize="13sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnSettingsBack" />
+
+        <LinearLayout
+            android:id="@+id/cardPrivacy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_glass_card"
+            android:orientation="vertical"
+            android:padding="16dp"
+            app:layout_constraintTop_toBottomOf="@id/tvPrivacySection">
+
+            <!-- Online Status Toggle -->
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchOnlineStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Share Online Status"
+                android:textColor="@color/text_white"
+                android:textSize="14sp"
+                app:thumbTint="@color/cyan_accent"
+                app:trackTint="@color/bg_glass_stroke" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Allow others to see when you are active"
+                android:textColor="@color/text_muted"
+                android:textSize="11sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="@color/bg_glass_stroke" />
+
+            <!-- Last Seen Toggle -->
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchLastSeen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Show Last Seen Timestamp"
+                android:textColor="@color/text_white"
+                android:textSize="14sp"
+                app:thumbTint="@color/cyan_accent"
+                app:trackTint="@color/bg_glass_stroke" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Displays your last connected timestamp"
+                android:textColor="@color/text_muted"
+                android:textSize="11sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="@color/bg_glass_stroke" />
+
+            <!-- Read Receipts Toggle -->
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchReadReceipts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Read Receipts"
+                android:textColor="@color/text_white"
+                android:textSize="14sp"
+                app:thumbTint="@color/cyan_accent"
+                app:trackTint="@color/bg_glass_stroke" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Show blue double check marks when messages are read"
+                android:textColor="@color/text_muted"
+                android:textSize="11sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="@color/bg_glass_stroke" />
+
+            <!-- Notification Preview Toggle -->
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchNotificationPreview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Show Message Preview"
+                android:textColor="@color/text_white"
+                android:textSize="14sp"
+                app:thumbTint="@color/cyan_accent"
+                app:trackTint="@color/bg_glass_stroke" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Display message snippet in system push notifications"
+                android:textColor="@color/text_muted"
+                android:textSize="11sp" />
+
+        </LinearLayout>
+
+        <!-- Security Section Card -->
+        <TextView
+            android:id="@+id/tvSecuritySection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-bold"
+            android:text="@string/section_security"
+            android:textColor="@color/cyan_accent"
+            android:textSize="13sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardPrivacy" />
+
+        <LinearLayout
+            android:id="@+id/cardSecurity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_glass_card"
+            android:orientation="vertical"
+            android:padding="16dp"
+            app:layout_constraintTop_toBottomOf="@id/tvSecuritySection">
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchAppVerification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Enable App Verification"
+                android:textColor="@color/text_white"
+                android:textSize="14sp"
+                app:thumbTint="@color/cyan_accent"
+                app:trackTint="@color/bg_glass_stroke" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Require biometric verification on app launch or game unlock"
+                android:textColor="@color/text_muted"
+                android:textSize="11sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="@color/bg_glass_stroke" />
+
+            <TextView
+                android:id="@+id/btnConfigureSecurity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:text="Configure Security PIN &amp; Biometrics ›"
+                android:textColor="@color/cyan_accent"
+                android:fontFamily="sans-serif-medium"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <!-- About Section Card -->
+        <TextView
+            android:id="@+id/tvAboutSection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-bold"
+            android:text="@string/section_about"
+            android:textColor="@color/cyan_accent"
+            android:textSize="13sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardSecurity" />
+
+        <LinearLayout
+            android:id="@+id/cardAbout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_glass_card"
+            android:orientation="vertical"
+            android:padding="16dp"
+            app:layout_constraintTop_toBottomOf="@id/tvAboutSection">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textColor="@color/text_white"
+                android:fontFamily="sans-serif-bold"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="@string/app_version"
+                android:textColor="@color/text_muted"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="@color/bg_glass_stroke" />
+
+            <TextView
+                android:id="@+id/btnViewPrivacyPolicy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:text="Privacy Policy"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/btnViewTerms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:text="Terms of Service"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/statusViewerRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#060C1B">
+
+    <!-- Status Image (for image statuses) -->
+    <ImageView
+        android:id="@+id/ivStatusImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitCenter"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <!-- Status Text Container (for text statuses) -->
+    <FrameLayout
+        android:id="@+id/layoutTextStatus"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_dark_gradient"
+        android:padding="32dp">
+
+        <TextView
+            android:id="@+id/tvStatusContentText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:textColor="@color/text_white"
+            android:textSize="26sp"
+            android:lineSpacingExtra="6dp"
+            tools:text="Excited to launch NexaChat! Glowing blue glass theme looks spectacular! ✨🚀" />
+    </FrameLayout>
+
+    <!-- Top Gradient Overlay -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="#80000000"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Story Segment Progress Bar -->
+    <ProgressBar
+        android:id="@+id/statusProgressBar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="12dp"
+        android:max="100"
+        android:progress="0"
+        android:progressTint="@color/cyan_accent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Top User Bar -->
+    <LinearLayout
+        android:id="@+id/topUserBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/statusProgressBar">
+
+        <!-- User Avatar -->
+        <FrameLayout
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/circle_status_ring_active">
+
+            <ImageView
+                android:id="@+id/ivStatusAuthorAvatar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="2dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_person"
+                app:tint="@color/cyan_accent" />
+        </FrameLayout>
+
+        <!-- Name and Timestamp -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvStatusAuthorName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-bold"
+                android:textColor="@color/text_white"
+                android:textSize="15sp"
+                tools:text="Alex Rivera" />
+
+            <TextView
+                android:id="@+id/tvStatusTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/cyan_accent"
+                android:textSize="12sp"
+                tools:text="Today, 2:45 PM • 24h story" />
+        </LinearLayout>
+
+        <!-- Close Button -->
+        <ImageView
+            android:id="@+id/btnStatusClose"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="6dp"
+            android:src="@drawable/ic_delete"
+            android:visibility="gone"
+            app:tint="@color/error_red"
+            android:contentDescription="Delete Status" />
+
+        <ImageView
+            android:id="@+id/btnStatusDismiss"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="6dp"
+            android:src="@drawable/ic_arrow_back"
+            app:tint="@color/text_white"
+            android:contentDescription="Close" />
+    </LinearLayout>
+
+    <!-- Bottom Caption (for photo status) -->
+    <TextView
+        android:id="@+id/tvStatusCaption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/bg_glass_card"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:padding="12dp"
+        android:textColor="@color/text_white"
+        android:textSize="15sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/bottomStatusActions"
+        tools:text="Beautiful sunset today!"
+        tools:visibility="visible" />
+
+    <!-- Bottom Actions / Viewers info -->
+    <LinearLayout
+        android:id="@+id/bottomStatusActions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/tvStatusViewers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_pill_inactive"
+            android:drawablePadding="6dp"
+            android:gravity="center"
+            android:paddingStart="16dp"
+            android:paddingTop="6dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="6dp"
+            android:textColor="@color/cyan_accent"
+            android:textSize="12sp"
+            android:visibility="gone"
+            tools:text="👁 12 views"
+            tools:visibility="visible" />
+    </LinearLayout>
+
+    <!-- Tap Zones for Prev / Next -->
+    <View
+        android:id="@+id/touchZoneLeft"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/touchZoneRight"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topUserBar"
+        app:layout_constraintWidth_percent="0.35" />
+
+    <View
+        android:id="@+id/touchZoneRight"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/touchZoneLeft"
+        app:layout_constraintTop_toBottomOf="@id/topUserBar"
+        app:layout_constraintWidth_percent="0.65" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

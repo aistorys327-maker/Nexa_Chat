@@ -1,0 +1,6 @@
+{
+  "name": "NexaChat",
+  "description": "Secure, production-style real-time messaging with biometric privacy lock, dark glassmorphism UI, rich media sharing, and instant presence.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

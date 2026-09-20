@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base application theme. -->
+    <style name="Theme.NexaChat" parent="Theme.Material3.Dark.NoActionBar">
+        <!-- Primary brand colors -->
+        <item name="colorPrimary">@color/cyan_accent</item>
+        <item name="colorPrimaryVariant">@color/blue_primary</item>
+        <item name="colorOnPrimary">@color/bg_dark_navy</item>
+        <item name="colorSecondary">@color/blue_gradient_end</item>
+        <item name="colorOnSecondary">@color/text_white</item>
+        
+        <!-- Background and surface colors -->
+        <item name="android:windowBackground">@color/bg_dark_navy</item>
+        <item name="colorSurface">@color/bg_glass_card</item>
+        <item name="colorOnSurface">@color/text_white</item>
+        
+        <!-- Status bar and navigation bar styling -->
+        <item name="android:statusBarColor">@color/bg_dark_gradient_start</item>
+        <item name="android:navigationBarColor">@color/bg_dark_navy</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+</resources>

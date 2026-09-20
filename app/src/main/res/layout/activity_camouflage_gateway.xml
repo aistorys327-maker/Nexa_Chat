@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/camouflageRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_dark_gradient"
+    android:padding="20dp">
+
+    <!-- Top Status / Title -->
+    <LinearLayout
+        android:id="@+id/headerCamouflage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/ivCamouflageIcon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="App Icon"
+            android:src="@drawable/ic_disguise_calculator" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvCamouflageTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-black"
+                android:text="Calculator"
+                android:textColor="@color/text_white"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tvCamouflageSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tap opens app • Long-press face unlock"
+                android:textColor="@color/cyan_accent"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <!-- Mobile Phone Style Lock Notch Indicator (No scanning panel!) -->
+        <LinearLayout
+            android:id="@+id/layoutPhoneFaceLockIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:background="@drawable/bg_glass_chip"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/ivNotchLockIcon"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:contentDescription="Lock"
+                android:src="@drawable/ic_lock"
+                app:tint="@color/cyan_accent" />
+
+            <TextView
+                android:id="@+id/tvNotchLockText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="Verifying..."
+                android:textColor="@color/cyan_accent"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Invisible background camera view for automatic face detection -->
+    <TextureView
+        android:id="@+id/hiddenCameraTexture"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:alpha="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- CONTAINER 1: CALCULATOR DECOY (Visible when disguise is Calculator) -->
+    <LinearLayout
+        android:id="@+id/layoutCalculatorDecoy"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/headerCamouflage">
+
+        <!-- Calculator Display -->
+        <TextView
+            android:id="@+id/tvCalcDisplay"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@drawable/bg_glass_card_elevated"
+            android:fontFamily="sans-serif-light"
+            android:gravity="bottom|end"
+            android:padding="16dp"
+            android:text="0"
+            android:textColor="@color/text_white"
+            android:textSize="40sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:text="💡 Long-press [ = ] or screen to Scan Face ID"
+            android:textColor="@color/text_secondary"
+            android:textSize="11sp" />
+
+        <!-- Keypad Grid -->
+        <GridLayout
+            android:id="@+id/calcGrid"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            android:layout_weight="1"
+            android:columnCount="4"
+            android:rowCount="5">
+
+            <!-- Row 1: C, ( ), %, / -->
+            <Button android:id="@+id/btnCalcClear" style="@style/Widget.Material3.Button.TonalButton" android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="4dp" android:text="C" android:textColor="@color/red_accent" />
+            <Button android:id="@+id/btnCalcOpenParen" style="@style/Widget.Material3.Button.TonalButton" android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="4dp" android:text="(" android:textColor="@color/cyan_accent" />
+            <Button android:id="@+id/btnCalcCloseParen" style="@style/Widget.Material3.Button.TonalButton" android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="4dp" android:text=")" android:textColor="@color/cyan_accent" />
+            <Button android:id="@+id/btnCalcDiv" style="@style/Widget.Material3.Button.TonalButton" android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="4dp" android:text="÷" android:textColor="@color/cyan_accent" />
+
+            <!-- Row 2: 7, 8, 9, * -->
+            <Button android:id="@+id/btnCalc7" style="@style/Widget.Material3.Button.ElevatedButton" android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="4dp" android:text="7" />
+            <Button android:id="@+id/btnCalc8" style="@style/Widget.Material3.Button.ElevatedButton" android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="4dp" android:text="8" />
+            <Button android:id="@+id/btnCalc9" style="@style/Widget.Material3.Button.ElevatedButton" android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="4dp" android:text="9" />
+            <Button android:id="@+id/btnCalcMul" style="@style/Widget.Material3.Button.TonalButton" android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="4dp" android:text="×" android:textColor="@color/cyan_accent" />
+
+            <!-- Row 3: 4, 5, 6, - -->
+            <Button android:id="@+id/btnCalc4" style="@style/Widget.Material3.Button.ElevatedButton" android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="4dp" android:text="4" />
+            <Button android:id="@+id/btnCalc5" style="@style/Widget.Material3.Button.ElevatedButton" android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="4dp" android:text="5" />
+            <Button android:id="@+id/btnCalc6" style="@style/Widget.Material3.Button.ElevatedButton" android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="4dp" android:text="6" />
+            <Button android:id="@+id/btnCalcSub" style="@style/Widget.Material3.Button.TonalButton" android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="4dp" android:text="−" android:textColor="@color/cyan_accent" />
+
+            <!-- Row 4: 1, 2, 3, + -->
+            <Button android:id="@+id/btnCalc1" style="@style/Widget.Material3.Button.ElevatedButton" android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="4dp" android:text="1" />
+            <Button android:id="@+id/btnCalc2" style="@style/Widget.Material3.Button.ElevatedButton" android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="4dp" android:text="2" />
+            <Button android:id="@+id/btnCalc3" style="@style/Widget.Material3.Button.ElevatedButton" android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="4dp" android:text="3" />
+            <Button android:id="@+id/btnCalcAdd" style="@style/Widget.Material3.Button.TonalButton" android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="4dp" android:text="+" android:textColor="@color/cyan_accent" />
+
+            <!-- Row 5: ., 0, DEL, = -->
+            <Button android:id="@+id/btnCalcDot" style="@style/Widget.Material3.Button.ElevatedButton" android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="4dp" android:text="." />
+            <Button android:id="@+id/btnCalc0" style="@style/Widget.Material3.Button.ElevatedButton" android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="4dp" android:text="0" />
+            <Button android:id="@+id/btnCalcDel" style="@style/Widget.Material3.Button.ElevatedButton" android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="4dp" android:text="⌫" />
+            <Button android:id="@+id/btnCalcEquals" style="@style/Widget.Material3.Button" android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" android:layout_margin="4dp" android:backgroundTint="@color/cyan_accent" android:text="=" android:textColor="@color/dark_surface" />
+        </GridLayout>
+    </LinearLayout>
+
+    <!-- CONTAINER 2: APP / GAME LAUNCHER CARD (Visible when disguised as an added app or game) -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutAppGameDecoy"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="24dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/headerCamouflage">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cardAppDecoyTrigger"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_glass_card_elevated"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/ivBigAppIcon"
+                android:layout_width="84dp"
+                android:layout_height="84dp"
+                android:contentDescription="App"
+                android:src="@drawable/ic_disguise_game"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvBigAppName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="sans-serif-black"
+                android:text="My Game"
+                android:textColor="@color/text_white"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ivBigAppIcon" />
+
+            <TextView
+                android:id="@+id/tvDecoyInstructions"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="Normal tap opens this application.\nLong-press to trigger Face Scan ID and open NexaChat."
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvBigAppName" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnNormalOpenApp"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/btn_primary_gradient"
+                android:fontFamily="sans-serif-bold"
+                android:text="Tap to Open App"
+                android:textColor="@color/dark_surface"
+                app:backgroundTint="@null"
+                app:icon="@drawable/ic_play"
+                app:iconTint="@color/dark_surface"
+                app:layout_constraintTop_toBottomOf="@id/tvDecoyInstructions" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLongPressFaceTrigger"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="12dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="Hold / Long Press for Face Scan"
+                android:textColor="@color/cyan_accent"
+                app:icon="@drawable/ic_face_scan"
+                app:iconTint="@color/cyan_accent"
+                app:layout_constraintTop_toBottomOf="@id/btnNormalOpenApp"
+                app:strokeColor="@color/cyan_accent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

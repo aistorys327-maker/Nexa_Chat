@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_glass_card_elevated"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/btn_edit_profile"
+        android:textColor="@color/text_white"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/hint_full_name"
+        android:textColor="@color/text_secondary"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/etEditFullName"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/bg_glass_input"
+        android:inputType="textPersonName"
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp"
+        android:textColor="@color/text_white"
+        android:textSize="14sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="Bio / Status"
+        android:textColor="@color/text_secondary"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/etEditBio"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/bg_glass_input"
+        android:hint="Hey there! I am using NexaChat."
+        android:inputType="textCapSentences"
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp"
+        android:textColor="@color/text_white"
+        android:textColorHint="@color/text_muted"
+        android:textSize="14sp" />
+
+</LinearLayout>

@@ -1,0 +1,44 @@
+{
+  "rules": {
+    "users": {
+      ".read": "auth != null",
+      "$uid": {
+        ".write": "auth != null && auth.uid === $uid",
+        ".indexOn": ["username", "email", "name", "online", "lastSeen"]
+      }
+    },
+    "usernames": {
+      ".read": "auth != null",
+      "$username": {
+        ".write": "auth != null && (!data.exists() || data.val() === auth.uid)"
+      }
+    },
+    "conversations": {
+      ".read": "auth != null",
+      ".indexOn": ["updatedAt"],
+      "$conversationId": {
+        ".read": "auth != null && data.child('members').child(auth.uid).val() === true",
+        ".write": "auth != null && (data.child('members').child(auth.uid).val() === true || newData.child('members').child(auth.uid).val() === true)"
+      }
+    },
+    "messages": {
+      "$conversationId": {
+        ".read": "auth != null && root.child('conversations').child($conversationId).child('members').child(auth.uid).val() === true",
+        ".write": "auth != null && root.child('conversations').child($conversationId).child('members').child(auth.uid).val() === true",
+        ".indexOn": ["timestamp"]
+      }
+    },
+    "groups": {
+      ".read": "auth != null",
+      "$groupId": {
+        ".read": "auth != null && data.child('members').child(auth.uid).val() === true",
+        ".write": "auth != null && (data.child('members').child(auth.uid).val() === true || newData.child('createdBy').val() === auth.uid)",
+        "messages": {
+          ".read": "auth != null && root.child('groups').child($groupId).child('members').child(auth.uid).val() === true",
+          ".write": "auth != null && root.child('groups').child($groupId).child('members').child(auth.uid).val() === true",
+          ".indexOn": ["timestamp"]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,986 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_dark_gradient">
+
+    <!-- Top Header Bar -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/headerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="20dp"
+        android:paddingTop="36dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="12dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/titleLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnSettings"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tvAppTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-black"
+                android:text="@string/app_name"
+                android:textColor="@color/text_white"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/tvAppTagline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:fontFamily="sans-serif-medium"
+                android:letterSpacing="0.05"
+                android:text="@string/app_tagline"
+                android:textColor="@color/cyan_accent"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <!-- Settings Top Button (profile ka bagal ma setting icon) -->
+        <FrameLayout
+            android:id="@+id/btnSettings"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/bg_glass_card"
+            android:contentDescription="Settings"
+            android:padding="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/profileButton"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="Settings"
+                android:src="@drawable/ic_settings"
+                app:tint="@color/cyan_accent" />
+        </FrameLayout>
+
+        <!-- Profile Top Button -->
+        <FrameLayout
+            android:id="@+id/profileButton"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="@drawable/circle_status_ring_active"
+            android:contentDescription="@string/tab_profile"
+            android:padding="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/ivHeaderAvatar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/tab_profile"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_person"
+                app:tint="@color/cyan_accent" />
+        </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Content Containers for the 4 Tabs -->
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigation"
+        app:layout_constraintTop_toBottomOf="@id/headerLayout">
+
+        <!-- 1. CHATS TAB VIEW -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/chatsViewContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible">
+
+            <!-- Search Bar -->
+            <LinearLayout
+                android:id="@+id/searchContainer"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_glass_input"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:contentDescription="@string/hint_search_chats"
+                    android:src="@drawable/ic_search"
+                    app:tint="@color/cyan_accent" />
+
+                <EditText
+                    android:id="@+id/etSearchConversations"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:background="@null"
+                    android:hint="@string/hint_search_chats"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@color/text_white"
+                    android:textColorHint="@color/text_muted"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- Conversations SwipeRefresh and RecyclerView -->
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipeRefreshChats"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/searchContainer">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvConversations"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:paddingBottom="80dp"
+                    tools:listitem="@layout/item_conversation" />
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+            <!-- Empty State -->
+            <LinearLayout
+                android:id="@+id/emptyChatsLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/searchContainer"
+                tools:visibility="visible">
+
+                <FrameLayout
+                    android:layout_width="76dp"
+                    android:layout_height="76dp"
+                    android:background="@drawable/circle_avatar_placeholder">
+
+                    <ImageView
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_chat"
+                        app:tint="@color/cyan_accent" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="sans-serif-bold"
+                    android:text="@string/no_conversations_title"
+                    android:textColor="@color/text_white"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center"
+                    android:text="@string/no_conversations_desc"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="13sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnEmptyStartChat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp"
+                    android:layout_marginTop="18dp"
+                    android:background="@drawable/btn_primary_gradient"
+                    android:paddingStart="24dp"
+                    android:paddingEnd="24dp"
+                    android:text="@string/btn_start_chat"
+                    android:textColor="@color/bg_dark_navy"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    app:backgroundTint="@null" />
+            </LinearLayout>
+
+            <!-- Floating Action Button -->
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabNewChat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="24dp"
+                android:contentDescription="@string/btn_start_chat"
+                android:src="@drawable/ic_add"
+                app:backgroundTint="@color/cyan_accent"
+                app:fabSize="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:tint="@color/bg_dark_navy" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- 2. UPDATES / STATUS TAB VIEW -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/updatesViewContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingBottom="80dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- My Status Card -->
+                    <LinearLayout
+                        android:id="@+id/cardMyStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/bg_glass_card_elevated"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="14dp">
+
+                        <FrameLayout
+                            android:layout_width="54dp"
+                            android:layout_height="54dp">
+
+                            <FrameLayout
+                                android:id="@+id/layoutMyStatusRing"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/circle_status_ring_active"
+                                android:padding="3dp">
+
+                                <ImageView
+                                    android:id="@+id/ivMyStatusAvatar"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:scaleType="centerCrop"
+                                    android:src="@drawable/ic_person"
+                                    app:tint="@color/cyan_accent" />
+                            </FrameLayout>
+
+                            <ImageView
+                                android:id="@+id/ivMyStatusAddBadge"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="bottom|end"
+                                android:background="@drawable/circle_status_ring_active"
+                                android:backgroundTint="@color/cyan_accent"
+                                android:padding="2dp"
+                                android:src="@drawable/ic_add"
+                                app:tint="@color/bg_dark_navy" />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif-bold"
+                                android:text="@string/title_my_status"
+                                android:textColor="@color/text_white"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/tvMyStatusSubtitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="@string/subtitle_tap_add_status"
+                                android:textColor="@color/cyan_accent"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <!-- Quick Actions for My Status -->
+                        <ImageView
+                            android:id="@+id/btnQuickTextStatus"
+                            android:layout_width="38dp"
+                            android:layout_height="38dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:padding="8dp"
+                            android:src="@drawable/ic_edit"
+                            app:tint="@color/cyan_accent"
+                            android:contentDescription="Text status" />
+
+                        <ImageView
+                            android:id="@+id/btnQuickPhotoStatus"
+                            android:layout_width="38dp"
+                            android:layout_height="38dp"
+                            android:layout_marginStart="4dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:padding="8dp"
+                            android:src="@drawable/ic_camera"
+                            app:tint="@color/cyan_accent"
+                            android:contentDescription="Photo status" />
+                    </LinearLayout>
+
+                    <!-- Recent Updates Header -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="18dp"
+                        android:layout_marginTop="18dp"
+                        android:layout_marginEnd="18dp"
+                        android:layout_marginBottom="8dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="sans-serif-black"
+                            android:text="@string/title_recent_updates"
+                            android:textColor="@color/text_white"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_pill_inactive"
+                            android:paddingStart="8dp"
+                            android:paddingTop="2dp"
+                            android:paddingEnd="8dp"
+                            android:paddingBottom="2dp"
+                            android:text="24h Timer"
+                            android:textColor="@color/cyan_accent"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- RecyclerView for Recent Updates -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvRecentUpdates"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        tools:listitem="@layout/item_status" />
+
+                    <!-- Empty Updates State -->
+                    <LinearLayout
+                        android:id="@+id/emptyUpdatesLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginTop="32dp"
+                        android:layout_marginEnd="32dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        tools:visibility="visible">
+
+                        <ImageView
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:src="@drawable/ic_update"
+                            app:tint="@color/cyan_dim" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:fontFamily="sans-serif-bold"
+                            android:text="@string/no_updates_title"
+                            android:textColor="@color/text_white"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:gravity="center"
+                            android:text="@string/no_updates_desc"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabNewStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="24dp"
+                android:contentDescription="Add Status"
+                android:src="@drawable/ic_camera"
+                app:backgroundTint="@color/cyan_accent"
+                app:fabSize="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:tint="@color/bg_dark_navy" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- 3. GROUPS TAB VIEW -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/groupsViewContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <!-- Banner Card: Create New Group -->
+            <LinearLayout
+                android:id="@+id/btnCreateGroupBanner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_glass_card_elevated"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="12dp"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <FrameLayout
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/circle_status_ring_active"
+                    android:backgroundTint="@color/glass_nav_selected"
+                    android:padding="2dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_group"
+                        app:tint="@color/cyan_accent" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-bold"
+                        android:text="Create New Group"
+                        android:textColor="@color/text_white"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="Chat and call together with multiple contacts"
+                        android:textColor="@color/cyan_accent"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_add"
+                    app:tint="@color/cyan_accent" />
+            </LinearLayout>
+
+            <!-- Search Groups -->
+            <LinearLayout
+                android:id="@+id/searchGroupsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_glass_input"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                app:layout_constraintTop_toBottomOf="@id/btnCreateGroupBanner">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/ic_search"
+                    app:tint="@color/cyan_accent" />
+
+                <EditText
+                    android:id="@+id/etSearchGroups"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:background="@null"
+                    android:hint="@string/hint_search_groups"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@color/text_white"
+                    android:textColorHint="@color/text_muted"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvGroups"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:clipToPadding="false"
+                android:paddingBottom="80dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/searchGroupsContainer"
+                tools:listitem="@layout/item_group_chat" />
+
+            <!-- Empty Groups State -->
+            <LinearLayout
+                android:id="@+id/emptyGroupsLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/searchGroupsContainer"
+                tools:visibility="visible">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/ic_group"
+                    app:tint="@color/cyan_dim" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="sans-serif-bold"
+                    android:text="@string/no_groups_title"
+                    android:textColor="@color/text_white"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center"
+                    android:text="@string/no_groups_desc"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnEmptyCreateGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="42dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/btn_primary_gradient"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:text="@string/btn_create_group"
+                    android:textColor="@color/bg_dark_navy"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:backgroundTint="@null" />
+            </LinearLayout>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabNewGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="24dp"
+                android:contentDescription="@string/btn_create_group"
+                android:src="@drawable/ic_group"
+                app:backgroundTint="@color/cyan_accent"
+                app:fabSize="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:tint="@color/bg_dark_navy" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- 4. CALLS & MOBILE CONTACTS TAB VIEW -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/callsViewContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <!-- Permission Card (if contacts not granted) -->
+            <LinearLayout
+                android:id="@+id/cardCallsPermission"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_glass_card_elevated"
+                android:orientation="vertical"
+                android:padding="14dp"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-bold"
+                    android:text="@string/permission_contacts_title"
+                    android:textColor="@color/text_white"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/permission_contacts_desc"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCallsGrantPermission"
+                    android:layout_width="wrap_content"
+                    android:layout_height="38dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/btn_primary_gradient"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="@string/btn_grant_contacts_permission"
+                    android:textColor="@color/bg_dark_navy"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:backgroundTint="@null" />
+            </LinearLayout>
+
+            <!-- Search Mobile Contacts -->
+            <LinearLayout
+                android:id="@+id/searchCallsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_glass_input"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                app:layout_constraintTop_toBottomOf="@id/cardCallsPermission">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/ic_search"
+                    app:tint="@color/cyan_accent" />
+
+                <EditText
+                    android:id="@+id/etSearchCallsContacts"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:background="@null"
+                    android:hint="@string/hint_search_contacts"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@color/text_white"
+                    android:textColorHint="@color/text_muted"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <!-- Contacts Filter Pills: All / On App / Invite -->
+            <LinearLayout
+                android:id="@+id/filterPillsCalls"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/searchCallsContainer">
+
+                <TextView
+                    android:id="@+id/chipCallsAll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:background="@drawable/bg_pill_active"
+                    android:gravity="center"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    android:text="All Contacts"
+                    android:textColor="@color/bg_dark_navy"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/chipCallsOnApp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_pill_inactive"
+                    android:gravity="center"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    android:text="On NexaChat"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/chipCallsInvite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_pill_inactive"
+                    android:gravity="center"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    android:text="Invite"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Contacts RecyclerView -->
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipeRefreshCalls"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/filterPillsCalls">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvCallsContacts"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:paddingBottom="80dp"
+                    tools:listitem="@layout/item_contact" />
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+            <!-- Empty State for Contacts -->
+            <LinearLayout
+                android:id="@+id/emptyCallsLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/filterPillsCalls"
+                tools:visibility="visible">
+
+                <ImageView
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:src="@drawable/ic_call"
+                    app:tint="@color/cyan_dim" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="sans-serif-bold"
+                    android:text="No contacts found"
+                    android:textColor="@color/text_white"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center"
+                    android:text="Save contacts to your phone to chat and call with them here."
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/pbCallsLoading"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:indeterminateTint="@color/cyan_accent"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
+
+    <!-- Bottom Navigation Bar (Transparent Blue Glowing Glass) with 4 Tabs -->
+    <LinearLayout
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="@drawable/bg_bottom_nav"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <!-- 1. Chat Tab -->
+        <LinearLayout
+            android:id="@+id/tabChats"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/ivTabChats"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="@string/tab_chats"
+                android:src="@drawable/ic_chat"
+                app:tint="@color/cyan_accent" />
+
+            <TextView
+                android:id="@+id/tvTabChats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/tab_chats"
+                android:textColor="@color/cyan_accent"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <!-- 2. Update Tab -->
+        <LinearLayout
+            android:id="@+id/tabUpdates"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/ivTabUpdates"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="@string/tab_update"
+                android:src="@drawable/ic_update"
+                app:tint="@color/text_secondary" />
+
+            <TextView
+                android:id="@+id/tvTabUpdates"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/tab_update"
+                android:textColor="@color/text_secondary"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <!-- 3. Group Tab -->
+        <LinearLayout
+            android:id="@+id/tabGroups"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/ivTabGroups"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="@string/tab_group"
+                android:src="@drawable/ic_group"
+                app:tint="@color/text_secondary" />
+
+            <TextView
+                android:id="@+id/tvTabGroups"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/tab_group"
+                android:textColor="@color/text_secondary"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <!-- 4. Calls Tab -->
+        <LinearLayout
+            android:id="@+id/tabCalls"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/ivTabCalls"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="@string/tab_calls"
+                android:src="@drawable/ic_call"
+                app:tint="@color/text_secondary" />
+
+            <TextView
+                android:id="@+id/tvTabCalls"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/tab_calls"
+                android:textColor="@color/text_secondary"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

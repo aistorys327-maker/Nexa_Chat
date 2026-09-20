@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@drawable/bg_dark_gradient">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="20dp"
+        android:paddingTop="36dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="40dp">
+
+        <!-- Header -->
+        <ImageView
+            android:id="@+id/btnProfileBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="8dp"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/text_white"
+            android:contentDescription="@string/title_profile" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="sans-serif-black"
+            android:text="@string/title_profile"
+            android:textColor="@color/text_white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/btnProfileBack"
+            app:layout_constraintStart_toEndOf="@id/btnProfileBack"
+            app:layout_constraintTop_toTopOf="@id/btnProfileBack" />
+
+        <ImageView
+            android:id="@+id/btnProfileSettings"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="8dp"
+            android:src="@drawable/ic_settings"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/btnProfileBack"
+            app:tint="@color/cyan_accent"
+            android:contentDescription="@string/title_settings" />
+
+        <!-- Avatar with change camera badge -->
+        <FrameLayout
+            android:id="@+id/profileAvatarWrapper"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnProfileBack">
+
+            <ImageView
+                android:id="@+id/ivProfilePicture"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/circle_avatar_placeholder"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_person"
+                app:tint="@color/cyan_accent"
+                android:contentDescription="@string/title_profile" />
+
+            <FrameLayout
+                android:id="@+id/btnChangePhoto"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="bottom|end"
+                android:background="@drawable/btn_primary_gradient">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_camera"
+                    app:tint="@color/bg_dark_navy"
+                    android:contentDescription="Change Photo" />
+            </FrameLayout>
+        </FrameLayout>
+
+        <!-- Name & Username -->
+        <TextView
+            android:id="@+id/tvProfileFullName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:fontFamily="sans-serif-black"
+            android:textColor="@color/text_white"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profileAvatarWrapper"
+            tools:text="Alex Mercer" />
+
+        <TextView
+            android:id="@+id/tvProfileUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="@color/cyan_accent"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvProfileFullName"
+            tools:text="@alexm" />
+
+        <!-- Info Glass Card -->
+        <LinearLayout
+            android:id="@+id/profileInfoCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/bg_glass_card"
+            android:orientation="vertical"
+            android:padding="20dp"
+            app:layout_constraintTop_toBottomOf="@id/tvProfileUsername">
+
+            <!-- Email -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hint_email"
+                android:textColor="@color/text_secondary"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvProfileEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/text_white"
+                android:textSize="14sp"
+                tools:text="alex@example.com" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="@color/bg_glass_stroke" />
+
+            <!-- Online Status / Last Seen -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Presence"
+                android:textColor="@color/text_secondary"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvProfilePresence"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/status_online"
+                android:textSize="14sp"
+                tools:text="Online" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="@color/bg_glass_stroke" />
+
+            <!-- Created At -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Member Since"
+                android:textColor="@color/text_secondary"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvProfileCreatedAt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/text_white"
+                android:textSize="14sp"
+                tools:text="September 2026" />
+
+        </LinearLayout>
+
+        <!-- Action Buttons -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnEditProfile"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/btn_glass_secondary"
+            android:fontFamily="sans-serif-bold"
+            android:text="@string/btn_edit_profile"
+            android:textColor="@color/cyan_accent"
+            android:textSize="14sp"
+            app:backgroundTint="@null"
+            app:layout_constraintTop_toBottomOf="@id/profileInfoCard" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnProfileSecurity"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/btn_glass_secondary"
+            android:fontFamily="sans-serif-bold"
+            android:text="Security &amp; Privacy"
+            android:textColor="@color/text_white"
+            android:textSize="14sp"
+            app:backgroundTint="@null"
+            app:layout_constraintTop_toBottomOf="@id/btnEditProfile" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLogout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/btn_glass_secondary"
+            android:fontFamily="sans-serif-bold"
+            android:text="@string/btn_logout"
+            android:textColor="@color/error_red"
+            android:textSize="14sp"
+            app:backgroundTint="@null"
+            app:layout_constraintTop_toBottomOf="@id/btnProfileSecurity" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

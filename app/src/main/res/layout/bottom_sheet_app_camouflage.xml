@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_dark_gradient">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- Drag Handle -->
+        <View
+            android:layout_width="40dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_nav_tab_indicator" />
+
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:contentDescription="Camouflage"
+                android:src="@drawable/ic_shield"
+                app:tint="@color/cyan_accent" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-black"
+                    android:text="App Camouflage &amp; Stealth"
+                    android:textColor="@color/text_white"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hide NexaChat icon • Disguise as app or game"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/btnCloseCamouflage"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:contentDescription="Close"
+                android:src="@drawable/ic_arrow_back"
+                app:tint="@color/text_secondary" />
+        </LinearLayout>
+
+        <!-- Master Switch Card -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/bg_glass_card_elevated"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/ivStealthBadge"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:contentDescription="Stealth"
+                android:src="@drawable/ic_visibility_off"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/cyan_accent" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/switchEnableCamouflage"
+                app:layout_constraintStart_toEndOf="@id/ivStealthBadge"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-bold"
+                    android:text="Enable App Camouflage"
+                    android:textColor="@color/text_white"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tvCamouflageStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="NexaChat icon is hidden on mobile screen"
+                    android:textColor="@color/cyan_accent"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/switchEnableCamouflage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Explanation Guide -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:lineSpacingExtra="3dp"
+            android:text="⚡ How it works:\n1. On your phone's home screen, NexaChat's icon is replaced with the added app/game icon.\n2. Normal Tap opens the chosen app or game.\n3. Long Press scans your face: if matched, NexaChat opens; if not matched, the normal app/game opens."
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp" />
+
+        <!-- Preset Disguises Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-bold"
+            android:text="QUICK DISGUISE PRESETS"
+            android:textColor="@color/cyan_accent"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <!-- Calculator -->
+            <LinearLayout
+                android:id="@+id/cardDisguiseCalculator"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_glass_card"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:contentDescription="Calculator"
+                    android:src="@drawable/ic_disguise_calculator" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Calculator"
+                    android:textColor="@color/text_white"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- Notes -->
+            <LinearLayout
+                android:id="@+id/cardDisguiseNotes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="3dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_glass_card"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:contentDescription="Notes"
+                    android:src="@drawable/ic_disguise_notes" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Notes"
+                    android:textColor="@color/text_white"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- Game Space -->
+            <LinearLayout
+                android:id="@+id/cardDisguiseGame"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="3dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_glass_card"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:contentDescription="Game"
+                    android:src="@drawable/ic_disguise_game" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Game"
+                    android:textColor="@color/text_white"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- Clock -->
+            <LinearLayout
+                android:id="@+id/cardDisguiseClock"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_glass_card"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:contentDescription="Clock"
+                    android:src="@drawable/ic_disguise_clock" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Clock"
+                    android:textColor="@color/text_white"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Pick from Installed Apps / Games -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-bold"
+            android:text="ADD APP FROM MOBILE"
+            android:textColor="@color/cyan_accent"
+            android:textSize="12sp" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cardAddCustomApp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_glass_card"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/ivCustomAppIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:contentDescription="Add App"
+                android:src="@drawable/ic_apps"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/cyan_accent" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_marginEnd="12dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btnPickInstalledApp"
+                app:layout_constraintStart_toEndOf="@id/ivCustomAppIcon"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tvSelectedAppName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-bold"
+                    android:text="Select App or Game"
+                    android:textColor="@color/text_white"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tvSelectedAppPackage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Choose any installed app/game on your phone"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnPickInstalledApp"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Browse"
+                android:textColor="@color/cyan_accent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Mobile Lock Style Face Unlock Instruction Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_glass_card"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:contentDescription="Face Lock"
+                android:src="@drawable/ic_lock"
+                app:tint="@color/cyan_accent" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-bold"
+                    android:text="Mobile Lock Face Recognition"
+                    android:textColor="@color/text_white"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Home screen par added icon ko long press karke unlock karein. Camera face dekhte hi direct khul jayegi, koi scanning panel nahi aayega."
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Save & Apply Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnApplyCamouflage"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/btn_primary_gradient"
+            android:fontFamily="sans-serif-bold"
+            android:text="Save &amp; Apply Disguise"
+            android:textColor="@color/dark_surface"
+            app:backgroundTint="@null" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
