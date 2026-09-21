@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,12 +12,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.nexachat.app.databinding.ActivitySettingsBinding;
 import com.nexachat.app.firebase.FirebaseManager;
+import com.nexachat.app.security.DisguiseManager;
+import com.nexachat.app.security.HiddenChatManager;
 import com.nexachat.app.security.SecurityHelper;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import androidx.appcompat.app.AlertDialog;
 
 public class SettingsActivity extends AppCompatActivity {
 
     private ActivitySettingsBinding binding;
     private SharedPreferences settingsPrefs;
+    private HiddenChatManager hiddenChatManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,13 +35,54 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         settingsPrefs = getSharedPreferences("nexachat_settings", Context.MODE_PRIVATE);
+        hiddenChatManager = HiddenChatManager.getInstance(this);
 
         setupUI();
         loadPreferences();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateHiddenChatsBadge();
+        updateCamouflageStatus();
+    }
+
+    private void updateCamouflageStatus() {
+        DisguiseManager dm = DisguiseManager.getInstance();
+        if (dm.isDisguiseEnabled(this)) {
+            String name = dm.getDisguisedAppName(this);
+            binding.tvCamouflageSettingStatus.setText("Active: Disguised as " + name + " • Long-press for NexaChat");
+            binding.tvCamouflageSettingStatus.setTextColor(getColor(R.color.cyan_accent));
+        } else {
+            binding.tvCamouflageSettingStatus.setText("Disguise as another app or game • Long-press Face & Fingerprint unlock");
+            binding.tvCamouflageSettingStatus.setTextColor(getColor(R.color.text_secondary));
+        }
+    }
+
+    private void updateHiddenChatsBadge() {
+        int count = hiddenChatManager.getHiddenChatCount();
+        binding.tvHiddenBadge.setText(String.valueOf(count));
+        if (count > 0) {
+            binding.tvHiddenChatsDesc.setText(count + " private conversation" + (count == 1 ? "" : "s") + " hidden");
+        } else {
+            binding.tvHiddenChatsDesc.setText("View and unhide private hidden conversations");
+        }
+    }
+
     private void setupUI() {
         binding.btnSettingsBack.setOnClickListener(v -> finish());
+
+        // Hidden Chats
+        binding.btnUnhideChats.setOnClickListener(v -> {
+            if (!hiddenChatManager.hasPassword()) {
+                if (hiddenChatManager.getHiddenChatCount() == 0) {
+                    Toast.makeText(this, "No hidden chats yet. Long-press any chat on the home screen to hide it.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
+            showEnterHiddenPasswordDialog();
+        });
 
         // Privacy Switches
         binding.switchOnlineStatus.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -57,6 +108,11 @@ public class SettingsActivity extends AppCompatActivity {
 
         binding.btnConfigureSecurity.setOnClickListener(v -> {
             startActivity(new Intent(this, SecurityActivity.class));
+        });
+
+        binding.btnAppCamouflageSetting.setOnClickListener(v -> {
+            AppCamouflageBottomSheet camouflageSheet = AppCamouflageBottomSheet.newInstance();
+            camouflageSheet.show(getSupportFragmentManager(), "app_camouflage");
         });
 
         binding.btnViewPrivacyPolicy.setOnClickListener(v -> {
@@ -88,6 +144,44 @@ public class SettingsActivity extends AppCompatActivity {
         binding.switchReadReceipts.setChecked(readReceipts);
         binding.switchNotificationPreview.setChecked(showPreview);
         binding.switchAppVerification.setChecked(appVerification);
+    }
+
+    private void showEnterHiddenPasswordDialog() {
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_enter_hidden_password, null);
+        EditText etEnterPassword = dialogView.findViewById(R.id.etEnterPassword);
+        TextView tvError = dialogView.findViewById(R.id.tvEnterPasswordError);
+        Button btnCancel = dialogView.findViewById(R.id.btnCancelEnterPassword);
+        Button btnVerify = dialogView.findViewById(R.id.btnVerifyEnterPassword);
+
+        AlertDialog dialog = new MaterialAlertDialogBuilder(this)
+                .setView(dialogView)
+                .setCancelable(true)
+                .create();
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+
+        btnCancel.setOnClickListener(v -> dialog.dismiss());
+        btnVerify.setOnClickListener(v -> {
+            String input = etEnterPassword.getText().toString().trim();
+            if (TextUtils.isEmpty(input)) {
+                tvError.setText("Please enter your password");
+                tvError.setVisibility(View.VISIBLE);
+                return;
+            }
+
+            if (hiddenChatManager.verifyPassword(input)) {
+                dialog.dismiss();
+                startActivity(new Intent(SettingsActivity.this, HiddenChatsActivity.class));
+            } else {
+                tvError.setText("Incorrect password. Please try again.");
+                tvError.setVisibility(View.VISIBLE);
+                etEnterPassword.setText("");
+            }
+        });
+
+        dialog.show();
     }
 
     private void showLogoutConfirmation() {

@@ -11,6 +11,15 @@
     <color name="bg_input_field">#B30A1426</color>
     <color name="bg_input_stroke">#4000E5FF</color>
 
+    <!-- Premium White Transparent Glass Colors -->
+    <color name="glass_white_card">#1AFFFFFF</color>
+    <color name="glass_white_card_elevated">#28FFFFFF</color>
+    <color name="glass_white_card_pressed">#38FFFFFF</color>
+    <color name="glass_white_stroke">#40FFFFFF</color>
+    <color name="glass_white_stroke_bright">#80FFFFFF</color>
+    <color name="glass_white_dialog_bg">#ED0E1A2E</color>
+    <color name="glass_white_input">#1FFFFFFF</color>
+
     <!-- Brand & Accents -->
     <color name="cyan_accent">#00E5FF</color>
     <color name="cyan_glow">#38BDF8</color>

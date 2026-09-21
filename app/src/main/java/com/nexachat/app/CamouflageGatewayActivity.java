@@ -1,6 +1,7 @@
 package com.nexachat.app;
 
 import android.Manifest;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -217,31 +218,33 @@ public class CamouflageGatewayActivity extends AppCompatActivity {
     }
 
     /**
-     * Mobile Lock Screen Face Unlock:
-     * - ZERO dialog panels or scanning popups.
+     * Mobile Lock Screen Face & Fingerprint Unlock:
+     * - ZERO dialog panels or scanning popups when camera face detection runs.
      * - The phone lock notch indicator appears at top.
-     * - Camera looks for face automatically.
-     * - As soon as face is matched, it unlocks directly and opens NexaChat!
+     * - Front camera scans face seamlessly in background without any intrusive UI.
+     * - Also supports Fingerprint / Biometric sensor.
+     * - On match: opens NexaChat immediately.
+     * - If match fails: redirects to the normal added app/game.
      */
     private void triggerAutomaticFaceUnlock() {
         if (isVerifyingFace || isUnlocked) return;
         isVerifyingFace = true;
 
-        // Show subtle mobile lock indicator at top
+        // Show subtle mobile lock indicator at top (No scanning panel!)
         binding.layoutPhoneFaceLockIndicator.setVisibility(View.VISIBLE);
         binding.ivNotchLockIcon.setImageResource(R.drawable.ic_lock);
         binding.ivNotchLockIcon.setColorFilter(ContextCompat.getColor(this, R.color.cyan_accent));
         binding.tvNotchLockText.setText("Verifying...");
 
-        // Check hardware Biometrics first if available
-        BiometricManager bm = BiometricManager.from(this);
-        int canAuth = bm.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG | BiometricManager.Authenticators.BIOMETRIC_WEAK);
-        if (canAuth == BiometricManager.BIOMETRIC_SUCCESS) {
-            checkBiometricOrUnlock();
+        // If camera permission is already granted, run silent zero-panel face verification first!
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            startInvisibleCameraFaceScan();
         } else {
-            // Check Camera permission for front-camera face recognition
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                startInvisibleCameraFaceScan();
+            // Check hardware Fingerprint / Biometrics
+            BiometricManager bm = BiometricManager.from(this);
+            int canAuth = bm.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG | BiometricManager.Authenticators.BIOMETRIC_WEAK);
+            if (canAuth == BiometricManager.BIOMETRIC_SUCCESS) {
+                checkBiometricOrUnlock();
             } else {
                 cameraPermissionLauncher.launch(Manifest.permission.CAMERA);
             }
@@ -261,12 +264,8 @@ public class CamouflageGatewayActivity extends AppCompatActivity {
                     @Override
                     public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
                         super.onAuthenticationError(errorCode, errString);
-                        // Fallback: try camera scan or open decoy
-                        if (ContextCompat.checkSelfPermission(CamouflageGatewayActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                            startInvisibleCameraFaceScan();
-                        } else {
-                            onFaceMatchFailed();
-                        }
+                        // If biometric canceled or failed, match failed -> launch normal added app/game
+                        onFaceMatchFailed();
                     }
 
                     @Override
@@ -276,9 +275,9 @@ public class CamouflageGatewayActivity extends AppCompatActivity {
                 });
 
         BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
-                .setTitle("Face Unlock")
-                .setSubtitle("Looking for your face...")
-                .setNegativeButtonText("Cancel")
+                .setTitle("Fingerprint / Face Verification")
+                .setSubtitle("Touch sensor or glance at camera")
+                .setNegativeButtonText("Open App")
                 .build();
 
         try {

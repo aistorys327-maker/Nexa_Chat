@@ -14,6 +14,7 @@ import android.provider.ContactsContract;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -44,7 +45,13 @@ import com.nexachat.app.models.StatusItem;
 import com.nexachat.app.models.User;
 import com.nexachat.app.models.UserStatusGroup;
 import com.nexachat.app.security.ChatLockManager;
+import com.nexachat.app.security.HiddenChatManager;
 import com.nexachat.app.security.SecurityHelper;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import android.view.LayoutInflater;
+import android.widget.Button;
+import android.widget.EditText;
+import androidx.appcompat.app.AlertDialog;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -234,24 +241,32 @@ public class MainActivity extends AppCompatActivity implements ContactsAdapter.O
     // 1. CHATS TAB
     // ==========================================
     private void setupChatsTab() {
-        conversationAdapter = new ConversationAdapter(this, conversation -> {
-            ChatLockManager lockManager = ChatLockManager.getInstance(MainActivity.this);
-            if (lockManager.isChatLocked(conversation.getConversationId()) && !lockManager.isSessionUnlocked(conversation.getConversationId())) {
-                SecurityHelper.authenticate(MainActivity.this, "Secured Conversation", "Verify your identity to open this chat",
-                        new SecurityHelper.AuthCallback() {
-                            @Override
-                            public void onSuccess() {
-                                lockManager.markSessionUnlocked(conversation.getConversationId());
-                                openConversation(conversation);
-                            }
+        conversationAdapter = new ConversationAdapter(this, new ConversationAdapter.OnConversationClickListener() {
+            @Override
+            public void onConversationClick(Conversation conversation) {
+                ChatLockManager lockManager = ChatLockManager.getInstance(MainActivity.this);
+                if (lockManager.isChatLocked(conversation.getConversationId()) && !lockManager.isSessionUnlocked(conversation.getConversationId())) {
+                    SecurityHelper.authenticate(MainActivity.this, "Secured Conversation", "Verify your identity to open this chat",
+                            new SecurityHelper.AuthCallback() {
+                                @Override
+                                public void onSuccess() {
+                                    lockManager.markSessionUnlocked(conversation.getConversationId());
+                                    openConversation(conversation);
+                                }
 
-                            @Override
-                            public void onFailure(String errorMessage) {
-                                Toast.makeText(MainActivity.this, "Authentication failed", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-            } else {
-                openConversation(conversation);
+                                @Override
+                                public void onFailure(String errorMessage) {
+                                    Toast.makeText(MainActivity.this, "Authentication failed", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                } else {
+                    openConversation(conversation);
+                }
+            }
+
+            @Override
+            public void onConversationLongClick(Conversation conversation) {
+                showConversationOptionsDialog(conversation);
             }
         });
 
@@ -339,8 +354,12 @@ public class MainActivity extends AppCompatActivity implements ContactsAdapter.O
     private void filterConversations(String query) {
         List<Conversation> filtered = new ArrayList<>();
         String lower = query.toLowerCase();
+        HiddenChatManager hiddenChatManager = HiddenChatManager.getInstance(this);
 
         for (Conversation c : allConversations) {
+            if (hiddenChatManager.isChatHidden(c.getConversationId())) {
+                continue;
+            }
             if (TextUtils.isEmpty(query)) {
                 filtered.add(c);
             } else {
@@ -501,8 +520,12 @@ public class MainActivity extends AppCompatActivity implements ContactsAdapter.O
     private void filterGroups(String query) {
         List<Conversation> filtered = new ArrayList<>();
         String lower = query.toLowerCase();
+        HiddenChatManager hiddenChatManager = HiddenChatManager.getInstance(this);
 
         for (Conversation g : groupConversations) {
+            if (hiddenChatManager.isChatHidden(g.getConversationId())) {
+                continue;
+            }
             if (TextUtils.isEmpty(query)) {
                 filtered.add(g);
             } else {
@@ -864,9 +887,158 @@ public class MainActivity extends AppCompatActivity implements ContactsAdapter.O
     @Override
     protected void onResume() {
         super.onResume();
+        if (binding.etSearchConversations != null) {
+            filterConversations(binding.etSearchConversations.getText().toString().trim());
+        }
+        if (binding.etSearchGroups != null) {
+            filterGroups(binding.etSearchGroups.getText().toString().trim());
+        }
         if (conversationAdapter != null) conversationAdapter.notifyDataSetChanged();
         if (groupAdapter != null) groupAdapter.notifyDataSetChanged();
         if (statusAdapter != null) statusAdapter.notifyDataSetChanged();
+    }
+
+    // ==========================================
+    // LONG-PRESS CHAT HIDING & OPTIONS
+    // ==========================================
+    private void showConversationOptionsDialog(Conversation conversation) {
+        HiddenChatManager hiddenChatManager = HiddenChatManager.getInstance(this);
+        ChatLockManager lockManager = ChatLockManager.getInstance(this);
+        boolean isLocked = lockManager.isChatLocked(conversation.getConversationId());
+        boolean isHidden = hiddenChatManager.isChatHidden(conversation.getConversationId());
+
+        String hideOptionTitle = isHidden ? "Unhide Chat" : "Hide Chat";
+        String lockOptionTitle = isLocked ? "Unlock Chat (Remove PIN/Biometric)" : "Lock Chat (PIN/Biometric)";
+        String[] options = new String[]{hideOptionTitle, lockOptionTitle, "Delete Conversation"};
+
+        new MaterialAlertDialogBuilder(this)
+                .setTitle(conversation.getTitle() != null ? conversation.getTitle() : "Conversation")
+                .setItems(options, (dialog, which) -> {
+                    if (which == 0) {
+                        if (isHidden) {
+                            hiddenChatManager.setChatHidden(conversation.getConversationId(), false);
+                            filterConversations(binding.etSearchConversations.getText().toString().trim());
+                            Toast.makeText(this, "Chat unhidden successfully", Toast.LENGTH_SHORT).show();
+                        } else {
+                            promptHideConversation(conversation);
+                        }
+                    } else if (which == 1) {
+                        toggleChatLock(conversation);
+                    } else if (which == 2) {
+                        confirmDeleteConversation(conversation);
+                    }
+                })
+                .show();
+    }
+
+    private void promptHideConversation(Conversation conversation) {
+        HiddenChatManager hiddenChatManager = HiddenChatManager.getInstance(this);
+
+        if (!hiddenChatManager.hasPassword()) {
+            // First time hiding: prompt user to create master password
+            showSetHiddenPasswordDialog(conversation);
+        } else {
+            // Confirmation dialog to hide
+            new MaterialAlertDialogBuilder(this)
+                    .setTitle("Hide Chat")
+                    .setMessage("Hide '" + (conversation.getTitle() != null ? conversation.getTitle() : "this chat") +
+                            "' from the main chat list?\n\nYou can access and unhide all hidden chats in Settings using your master password.")
+                    .setPositiveButton("Hide", (dialog, which) -> {
+                        hiddenChatManager.setChatHidden(conversation.getConversationId(), true);
+                        filterConversations(binding.etSearchConversations.getText().toString().trim());
+                        filterGroups(binding.etSearchGroups.getText().toString().trim());
+                        Toast.makeText(this, "Chat hidden! Manage in Settings > Hidden Chats", Toast.LENGTH_LONG).show();
+                    })
+                    .setNegativeButton("Cancel", null)
+                    .show();
+        }
+    }
+
+    private void showSetHiddenPasswordDialog(Conversation conversation) {
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_set_hidden_password, null);
+        EditText etNewPassword = dialogView.findViewById(R.id.etNewPassword);
+        EditText etConfirmPassword = dialogView.findViewById(R.id.etConfirmPassword);
+        TextView tvError = dialogView.findViewById(R.id.tvSetPasswordError);
+        Button btnCancel = dialogView.findViewById(R.id.btnCancelSetPassword);
+        Button btnConfirm = dialogView.findViewById(R.id.btnConfirmSetPassword);
+
+        AlertDialog dialog = new MaterialAlertDialogBuilder(this)
+                .setView(dialogView)
+                .setCancelable(true)
+                .create();
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+
+        btnCancel.setOnClickListener(v -> dialog.dismiss());
+        btnConfirm.setOnClickListener(v -> {
+            String p1 = etNewPassword.getText().toString().trim();
+            String p2 = etConfirmPassword.getText().toString().trim();
+
+            if (p1.length() < 4) {
+                tvError.setText("Password must be at least 4 characters");
+                tvError.setVisibility(View.VISIBLE);
+                return;
+            }
+            if (!p1.equals(p2)) {
+                tvError.setText("Passwords do not match");
+                tvError.setVisibility(View.VISIBLE);
+                return;
+            }
+
+            HiddenChatManager hiddenChatManager = HiddenChatManager.getInstance(MainActivity.this);
+            hiddenChatManager.setPassword(p1);
+            hiddenChatManager.setChatHidden(conversation.getConversationId(), true);
+
+            filterConversations(binding.etSearchConversations.getText().toString().trim());
+            filterGroups(binding.etSearchGroups.getText().toString().trim());
+
+            Toast.makeText(MainActivity.this, "Password created & Chat hidden! Access in Settings > Hidden Chats", Toast.LENGTH_LONG).show();
+            dialog.dismiss();
+        });
+
+        dialog.show();
+    }
+
+    private void toggleChatLock(Conversation conversation) {
+        ChatLockManager lockManager = ChatLockManager.getInstance(this);
+        String convId = conversation.getConversationId();
+        if (lockManager.isChatLocked(convId)) {
+            SecurityHelper.authenticate(this, "Unlock Conversation", "Verify identity to remove chat lock", new SecurityHelper.AuthCallback() {
+                @Override
+                public void onSuccess() {
+                    lockManager.setChatLocked(convId, false);
+                    conversationAdapter.notifyDataSetChanged();
+                    Toast.makeText(MainActivity.this, "Chat lock removed", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onFailure(String errorMessage) {
+                    Toast.makeText(MainActivity.this, "Authentication failed", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            lockManager.setChatLocked(convId, true);
+            conversationAdapter.notifyDataSetChanged();
+            Toast.makeText(this, "Chat locked with biometric/PIN", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void confirmDeleteConversation(Conversation conversation) {
+        new MaterialAlertDialogBuilder(this)
+                .setTitle("Delete Conversation")
+                .setMessage("Are you sure you want to delete this conversation with " +
+                        (conversation.getTitle() != null ? conversation.getTitle() : "this contact") + "?")
+                .setPositiveButton("Delete", (dialog, which) -> {
+                    if (currentUserId != null && conversation.getConversationId() != null) {
+                        FirebaseManager.getInstance().getUserConversationsRef(currentUserId)
+                                .child(conversation.getConversationId()).removeValue();
+                        Toast.makeText(this, "Conversation deleted", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
     }
 
     @Override

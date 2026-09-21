@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.nexachat.app.databinding.BottomSheetAppCamouflageBinding;
 import com.nexachat.app.security.DisguiseManager;
+import com.nexachat.app.security.SecurityHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -87,13 +89,21 @@ public class AppCamouflageBottomSheet extends BottomSheetDialogFragment {
             try {
                 PackageManager pm = context.getPackageManager();
                 ApplicationInfo info = pm.getApplicationInfo(selectedPackage, 0);
-                binding.tvSelectedAppName.setText(pm.getApplicationLabel(info));
+                binding.tvSelectedAppName.setText(selectedAppName);
                 binding.tvSelectedAppPackage.setText(selectedPackage);
                 binding.ivCustomAppIcon.setImageDrawable(pm.getApplicationIcon(info));
+                if (binding.etCustomAppName != null) {
+                    binding.etCustomAppName.setText(selectedAppName);
+                }
             } catch (Exception e) {
                 binding.tvSelectedAppName.setText(selectedAppName);
                 binding.tvSelectedAppPackage.setText(selectedPackage);
+                if (binding.etCustomAppName != null) {
+                    binding.etCustomAppName.setText(selectedAppName);
+                }
             }
+        } else if (binding.etCustomAppName != null && selectedAppName != null) {
+            binding.etCustomAppName.setText(selectedAppName);
         }
 
         highlightSelectedPreset(selectedType);
@@ -170,19 +180,40 @@ public class AppCamouflageBottomSheet extends BottomSheetDialogFragment {
             boolean enable = binding.switchEnableCamouflage.isChecked();
 
             if (enable) {
-                DisguiseManager.getInstance().enableDisguise(
-                        context,
-                        selectedType,
-                        selectedAppName,
-                        selectedPackage,
-                        selectedAlias
-                );
-                Toast.makeText(context, "Camouflage Enabled! Disguised as " + selectedAppName, Toast.LENGTH_LONG).show();
+                // If custom name is entered, use that custom name
+                if (binding.etCustomAppName != null && !TextUtils.isEmpty(binding.etCustomAppName.getText())) {
+                    selectedAppName = binding.etCustomAppName.getText().toString().trim();
+                }
+
+                // Prompt user with fingerprint or face/PIN verification before saving disguise settings
+                SecurityHelper.authenticate(requireActivity(), "Disguise Verification", "Verify Fingerprint, Face, or PIN to save disguise", new SecurityHelper.AuthCallback() {
+                    @Override
+                    public void onSuccess() {
+                        if (isAdded() && getContext() != null) {
+                            DisguiseManager.getInstance().enableDisguise(
+                                    requireContext(),
+                                    selectedType,
+                                    selectedAppName,
+                                    selectedPackage,
+                                    selectedAlias
+                            );
+                            Toast.makeText(requireContext(), "Disguise Applied! Saved as " + selectedAppName, Toast.LENGTH_LONG).show();
+                            dismiss();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(String errorMessage) {
+                        if (isAdded() && getContext() != null) {
+                            Toast.makeText(requireContext(), "Authentication required: " + errorMessage, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             } else {
                 DisguiseManager.getInstance().disableDisguise(context);
                 Toast.makeText(context, "Camouflage Disabled! Default NexaChat restored.", Toast.LENGTH_SHORT).show();
+                dismiss();
             }
-            dismiss();
         });
     }
 
@@ -256,6 +287,9 @@ public class AppCamouflageBottomSheet extends BottomSheetDialogFragment {
                     binding.tvSelectedAppName.setText(chosen.label);
                     binding.tvSelectedAppPackage.setText(chosen.packageName);
                     binding.ivCustomAppIcon.setImageDrawable(chosen.icon);
+                    if (binding.etCustomAppName != null) {
+                        binding.etCustomAppName.setText(chosen.label);
+                    }
 
                     highlightSelectedPreset("");
                     binding.switchEnableCamouflage.setChecked(true);

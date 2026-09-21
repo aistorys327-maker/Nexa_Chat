@@ -33,7 +33,11 @@ import com.nexachat.app.databinding.BottomSheetSettingsBinding;
 import com.nexachat.app.firebase.FirebaseManager;
 import com.nexachat.app.models.User;
 import com.nexachat.app.security.DisguiseManager;
+import com.nexachat.app.security.HiddenChatManager;
 import com.nexachat.app.security.SecurityHelper;
+import android.widget.Button;
+import android.widget.TextView;
+import androidx.appcompat.app.AlertDialog;
 
 public class SettingsBottomSheet extends BottomSheetDialogFragment {
 
@@ -232,6 +236,16 @@ public class SettingsBottomSheet extends BottomSheetDialogFragment {
             camouflageSheet.show(getParentFragmentManager(), "app_camouflage");
         });
 
+        // Unhide Chats button
+        binding.btnOpenUnhideChats.setOnClickListener(v -> {
+            HiddenChatManager hcm = HiddenChatManager.getInstance(requireContext());
+            if (!hcm.hasPassword() && hcm.getHiddenChatCount() == 0) {
+                Toast.makeText(requireContext(), "No hidden chats yet. Long-press any chat on the home screen to hide it.", Toast.LENGTH_LONG).show();
+                return;
+            }
+            showEnterHiddenPasswordDialog();
+        });
+
         // Security settings button
         binding.btnOpenSecuritySettings.setOnClickListener(v -> {
             dismiss();
@@ -327,5 +341,46 @@ public class SettingsBottomSheet extends BottomSheetDialogFragment {
                 }
             }
         });
+    }
+
+    private void showEnterHiddenPasswordDialog() {
+        Context context = requireContext();
+        View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_enter_hidden_password, null);
+        EditText etEnterPassword = dialogView.findViewById(R.id.etEnterPassword);
+        TextView tvError = dialogView.findViewById(R.id.tvEnterPasswordError);
+        Button btnCancel = dialogView.findViewById(R.id.btnCancelEnterPassword);
+        Button btnVerify = dialogView.findViewById(R.id.btnVerifyEnterPassword);
+
+        AlertDialog dialog = new MaterialAlertDialogBuilder(context)
+                .setView(dialogView)
+                .setCancelable(true)
+                .create();
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+
+        btnCancel.setOnClickListener(v -> dialog.dismiss());
+        btnVerify.setOnClickListener(v -> {
+            String input = etEnterPassword.getText().toString().trim();
+            if (TextUtils.isEmpty(input)) {
+                tvError.setText("Please enter your password");
+                tvError.setVisibility(View.VISIBLE);
+                return;
+            }
+
+            HiddenChatManager hcm = HiddenChatManager.getInstance(context);
+            if (hcm.verifyPassword(input)) {
+                dialog.dismiss();
+                dismiss(); // Dismiss bottom sheet
+                startActivity(new Intent(context, HiddenChatsActivity.class));
+            } else {
+                tvError.setText("Incorrect password. Please try again.");
+                tvError.setVisibility(View.VISIBLE);
+                etEnterPassword.setText("");
+            }
+        });
+
+        dialog.show();
     }
 }

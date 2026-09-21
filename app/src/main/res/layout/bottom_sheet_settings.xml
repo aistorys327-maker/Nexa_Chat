@@ -471,13 +471,27 @@
 
         </LinearLayout>
 
+        <!-- Unhide Chats Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnOpenUnhideChats"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Unhide Chats (Protected)"
+            android:textColor="@color/text_white"
+            app:icon="@drawable/ic_visibility_off"
+            app:iconTint="@color/cyan_accent"
+            app:strokeColor="@color/glass_white_stroke" />
+
         <!-- PIN & Security Button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnOpenSecuritySettings"
             style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             android:fontFamily="sans-serif-medium"
             android:text="Configure Security PIN &amp; Locks"
             android:textColor="@color/cyan_accent"

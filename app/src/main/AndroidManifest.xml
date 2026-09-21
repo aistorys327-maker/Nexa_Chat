@@ -150,6 +150,10 @@
             android:exported="false" />
 
         <activity
+            android:name=".HiddenChatsActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".SecurityActivity"
             android:exported="false" />
 

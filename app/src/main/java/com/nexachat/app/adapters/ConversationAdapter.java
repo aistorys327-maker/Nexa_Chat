@@ -23,6 +23,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
 
     public interface OnConversationClickListener {
         void onConversationClick(Conversation conversation);
+        default void onConversationLongClick(Conversation conversation) {}
     }
 
     private final Context context;
@@ -107,6 +108,14 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
                 if (listener != null) {
                     listener.onConversationClick(conv);
                 }
+            });
+
+            binding.getRoot().setOnLongClickListener(v -> {
+                if (listener != null) {
+                    listener.onConversationLongClick(conv);
+                    return true;
+                }
+                return false;
             });
         }
     }

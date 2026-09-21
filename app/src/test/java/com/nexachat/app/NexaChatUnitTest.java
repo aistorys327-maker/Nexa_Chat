@@ -112,13 +112,13 @@ public class NexaChatUnitTest {
     public void firebaseManager_cleanPhoneNumber_handlesNullAndFormats() {
         assertEquals("", FirebaseManager.cleanPhoneNumber(null));
         assertEquals("", FirebaseManager.cleanPhoneNumber(""));
-        assertEquals("9876543210", FirebaseManager.cleanPhoneNumber("+91 98765-43210"));
+        assertEquals("919876543210", FirebaseManager.cleanPhoneNumber("+91 98765-43210"));
         assertEquals("123456", FirebaseManager.cleanPhoneNumber("123-456"));
     }
 
     @Test
     public void firebaseManager_phoneToEmail_generatesValidSyntheticEmail() {
-        assertEquals("9876543210@nexachat.app", FirebaseManager.phoneToEmail("+91 98765 43210"));
+        assertEquals("919876543210@nexachat.app", FirebaseManager.phoneToEmail("+91 98765 43210"));
         assertEquals("@nexachat.app", FirebaseManager.phoneToEmail(null));
     }
 
@@ -126,6 +126,18 @@ public class NexaChatUnitTest {
     public void firebaseManager_normalizePasswordOrPin_enforcesLength() {
         assertEquals("1234_nexa", FirebaseManager.normalizePasswordOrPin("1234"));
         assertEquals("password123", FirebaseManager.normalizePasswordOrPin("password123"));
+    }
+
+    @Test
+    public void hiddenChatManager_hashing_isSecureAndDeterministic() {
+        String h1 = com.nexachat.app.security.HiddenChatManager.hashString("secretPass123");
+        String h2 = com.nexachat.app.security.HiddenChatManager.hashString("secretPass123");
+        String h3 = com.nexachat.app.security.HiddenChatManager.hashString("otherPass");
+
+        assertNotNull(h1);
+        assertEquals(h1, h2);
+        assertNotEquals(h1, h3);
+        assertEquals(64, h1.length()); // SHA-256 is 64 hex characters
     }
 }
 
