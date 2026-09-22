@@ -32,11 +32,21 @@
             android:name=".MainActivity"
             android:exported="true"
             android:launchMode="singleTop">
+        </activity>
+
+        <!-- Default NexaChat Launcher Alias -->
+        <activity-alias
+            android:name=".LauncherDefault"
+            android:enabled="true"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:targetActivity=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity-alias>
 
         <!-- Camouflage & App Disguise Gateway -->
         <activity
@@ -91,6 +101,45 @@
             android:exported="true"
             android:icon="@drawable/ic_disguise_game"
             android:label="Game Space"
+            android:targetActivity=".CamouflageGatewayActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".LauncherAliasCamera"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@drawable/ic_disguise_camera"
+            android:label="Camera"
+            android:targetActivity=".CamouflageGatewayActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".LauncherAliasWeather"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@drawable/ic_disguise_weather"
+            android:label="Weather"
+            android:targetActivity=".CamouflageGatewayActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".LauncherAliasMusic"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@drawable/ic_disguise_music"
+            android:label="Music"
             android:targetActivity=".CamouflageGatewayActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

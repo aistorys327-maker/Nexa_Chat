@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Backgrounds -->
-    <color name="bg_dark_navy">#070D18</color>
-    <color name="bg_dark_gradient_start">#050A14</color>
-    <color name="bg_dark_gradient_end">#0A1426</color>
-    <color name="bg_glass_card">#CC0F1E36</color>
-    <color name="bg_glass_card_elevated">#E6142749</color>
-    <color name="bg_glass_stroke">#3338BDF8</color>
-    <color name="bg_glass_stroke_glow">#00E5FF</color>
-    <color name="bg_input_field">#B30A1426</color>
-    <color name="bg_input_stroke">#4000E5FF</color>
+    <!-- Backgrounds - Purple/Blue Liquid Glass -->
+    <color name="bg_dark_navy">#0A0B1A</color>
+    <color name="bg_dark_gradient_start">#150A30</color>
+    <color name="bg_dark_gradient_center">#0D153B</color>
+    <color name="bg_dark_gradient_end">#051126</color>
+    <color name="bg_liquid_purple">#1A0B36</color>
+    <color name="bg_liquid_blue">#0A1A3A</color>
+    <color name="bg_glass_card">#1FFFFFFF</color>
+    <color name="bg_glass_card_elevated">#28FFFFFF</color>
+    <color name="bg_glass_stroke">#38FFFFFF</color>
+    <color name="bg_glass_stroke_glow">#6600E5FF</color>
+    <color name="bg_input_field">#1CFFFFFF</color>
+    <color name="bg_input_stroke">#40FFFFFF</color>
 
     <!-- Premium White Transparent Glass Colors -->
-    <color name="glass_white_card">#1AFFFFFF</color>
-    <color name="glass_white_card_elevated">#28FFFFFF</color>
-    <color name="glass_white_card_pressed">#38FFFFFF</color>
-    <color name="glass_white_stroke">#40FFFFFF</color>
-    <color name="glass_white_stroke_bright">#80FFFFFF</color>
-    <color name="glass_white_dialog_bg">#ED0E1A2E</color>
-    <color name="glass_white_input">#1FFFFFFF</color>
+    <color name="glass_white_card">#1FFFFFFF</color>
+    <color name="glass_white_card_elevated">#2AFFFFFF</color>
+    <color name="glass_white_card_pressed">#3DFFFFFF</color>
+    <color name="glass_white_stroke">#38FFFFFF</color>
+    <color name="glass_white_stroke_bright">#60FFFFFF</color>
+    <color name="glass_white_dialog_bg">#F010142A</color>
+    <color name="glass_white_input">#1AFFFFFF</color>
 
     <!-- Brand & Accents -->
     <color name="cyan_accent">#00E5FF</color>

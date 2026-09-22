@@ -264,7 +264,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-bold"
-                    android:text="Add App (Stealth Disguise)"
+                    android:text="Select App (Mobile Icon &amp; Name Change)"
                     android:textColor="@color/text_white"
                     android:textSize="15sp" />
 
@@ -273,7 +273,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:text="Disguise as Calculator / App with Face Scan"
+                    android:text="Change mobile launcher icon &amp; name (Presets or Installed Apps)"
                     android:textColor="@color/cyan_accent"
                     android:textSize="11sp" />
             </LinearLayout>

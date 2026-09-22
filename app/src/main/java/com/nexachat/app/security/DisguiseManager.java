@@ -30,12 +30,19 @@ public class DisguiseManager {
     public static final String TYPE_NOTES = "notes";
     public static final String TYPE_CLOCK = "clock";
     public static final String TYPE_GAME = "game";
+    public static final String TYPE_CAMERA = "camera";
+    public static final String TYPE_WEATHER = "weather";
+    public static final String TYPE_MUSIC = "music";
     public static final String TYPE_CUSTOM = "custom";
 
+    public static final String ALIAS_DEFAULT = "com.nexachat.app.LauncherDefault";
     public static final String ALIAS_CALCULATOR = "com.nexachat.app.LauncherAliasCalculator";
     public static final String ALIAS_NOTES = "com.nexachat.app.LauncherAliasNotes";
     public static final String ALIAS_CLOCK = "com.nexachat.app.LauncherAliasClock";
     public static final String ALIAS_GAME = "com.nexachat.app.LauncherAliasGame";
+    public static final String ALIAS_CAMERA = "com.nexachat.app.LauncherAliasCamera";
+    public static final String ALIAS_WEATHER = "com.nexachat.app.LauncherAliasWeather";
+    public static final String ALIAS_MUSIC = "com.nexachat.app.LauncherAliasMusic";
     public static final String ALIAS_CUSTOM = "com.nexachat.app.LauncherAliasCustom";
 
     private static DisguiseManager instance;
@@ -90,9 +97,10 @@ public class DisguiseManager {
                 .putString(KEY_ACTIVE_ALIAS, aliasClassName)
                 .apply();
 
-        // 1. Enable chosen alias if provided
+        // 1. Enable chosen alias and disable all other aliases
         String[] allAliases = new String[]{
-                ALIAS_CALCULATOR, ALIAS_NOTES, ALIAS_CLOCK, ALIAS_GAME, ALIAS_CUSTOM
+                ALIAS_CALCULATOR, ALIAS_NOTES, ALIAS_CLOCK, ALIAS_GAME,
+                ALIAS_CAMERA, ALIAS_WEATHER, ALIAS_MUSIC, ALIAS_CUSTOM
         };
 
         for (String alias : allAliases) {
@@ -108,7 +116,16 @@ public class DisguiseManager {
             } catch (Throwable ignored) {}
         }
 
-        // 2. CRITICAL: NEVER disable MainActivity! It must always remain enabled to prevent "app keeps stopping" crashes
+        // 2. Disable default launcher alias so only the selected disguised icon appears on mobile screen
+        try {
+            pm.setComponentEnabledSetting(
+                    new ComponentName(context, ALIAS_DEFAULT),
+                    PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                    PackageManager.DONT_KILL_APP
+            );
+        } catch (Throwable ignored) {}
+
+        // 3. Keep MainActivity component itself enabled for internal navigations
         try {
             pm.setComponentEnabledSetting(
                     new ComponentName(context, "com.nexachat.app.MainActivity"),
@@ -145,7 +162,7 @@ public class DisguiseManager {
     public void disableDisguise(Context context) {
         PackageManager pm = context.getPackageManager();
 
-        // 1. Enable standard MainActivity
+        // 1. Enable standard MainActivity and default launcher alias
         try {
             pm.setComponentEnabledSetting(
                     new ComponentName(context, "com.nexachat.app.MainActivity"),
@@ -154,9 +171,18 @@ public class DisguiseManager {
             );
         } catch (Throwable ignored) {}
 
-        // 2. Disable all aliases
+        try {
+            pm.setComponentEnabledSetting(
+                    new ComponentName(context, ALIAS_DEFAULT),
+                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                    PackageManager.DONT_KILL_APP
+            );
+        } catch (Throwable ignored) {}
+
+        // 2. Disable all disguise aliases
         String[] allAliases = new String[]{
-                ALIAS_CALCULATOR, ALIAS_NOTES, ALIAS_CLOCK, ALIAS_GAME, ALIAS_CUSTOM
+                ALIAS_CALCULATOR, ALIAS_NOTES, ALIAS_CLOCK, ALIAS_GAME,
+                ALIAS_CAMERA, ALIAS_WEATHER, ALIAS_MUSIC, ALIAS_CUSTOM
         };
 
         for (String alias : allAliases) {

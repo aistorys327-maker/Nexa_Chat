@@ -182,6 +182,11 @@ public class MainActivity extends AppCompatActivity implements ContactsAdapter.O
             startActivity(new Intent(MainActivity.this, ProfileActivity.class));
         });
 
+        // Header change app icon button (Select app / mobile icon change)
+        binding.btnChangeAppIcon.setOnClickListener(v -> {
+            AppCamouflageBottomSheet.newInstance().show(getSupportFragmentManager(), "app_camouflage");
+        });
+
         // Header settings button (profile ka bagal ma setting icon)
         binding.btnSettings.setOnClickListener(v -> {
             SettingsBottomSheet.newInstance().show(getSupportFragmentManager(), "settings_sheet");
@@ -203,15 +208,19 @@ public class MainActivity extends AppCompatActivity implements ContactsAdapter.O
 
         binding.ivTabChats.setColorFilter(tabIndex == 0 ? colorAccent : colorSecondary);
         binding.tvTabChats.setTextColor(tabIndex == 0 ? colorAccent : colorSecondary);
+        binding.tabChats.setBackgroundResource(tabIndex == 0 ? R.drawable.bg_active_tab_glass_glow : 0);
 
         binding.ivTabUpdates.setColorFilter(tabIndex == 1 ? colorAccent : colorSecondary);
         binding.tvTabUpdates.setTextColor(tabIndex == 1 ? colorAccent : colorSecondary);
+        binding.tabUpdates.setBackgroundResource(tabIndex == 1 ? R.drawable.bg_active_tab_glass_glow : 0);
 
         binding.ivTabGroups.setColorFilter(tabIndex == 2 ? colorAccent : colorSecondary);
         binding.tvTabGroups.setTextColor(tabIndex == 2 ? colorAccent : colorSecondary);
+        binding.tabGroups.setBackgroundResource(tabIndex == 2 ? R.drawable.bg_active_tab_glass_glow : 0);
 
         binding.ivTabCalls.setColorFilter(tabIndex == 3 ? colorAccent : colorSecondary);
         binding.tvTabCalls.setTextColor(tabIndex == 3 ? colorAccent : colorSecondary);
+        binding.tabCalls.setBackgroundResource(tabIndex == 3 ? R.drawable.bg_active_tab_glass_glow : 0);
 
         // Visibility of view containers
         binding.chatsViewContainer.setVisibility(tabIndex == 0 ? View.VISIBLE : View.GONE);

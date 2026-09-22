@@ -127,6 +127,15 @@ public class AppCamouflageBottomSheet extends BottomSheetDialogFragment {
         binding.cardDisguiseNotes.setBackgroundColor(DisguiseManager.TYPE_NOTES.equals(type) ? colorSelected : colorNormal);
         binding.cardDisguiseGame.setBackgroundColor(DisguiseManager.TYPE_GAME.equals(type) ? colorSelected : colorNormal);
         binding.cardDisguiseClock.setBackgroundColor(DisguiseManager.TYPE_CLOCK.equals(type) ? colorSelected : colorNormal);
+        if (binding.cardDisguiseCamera != null) {
+            binding.cardDisguiseCamera.setBackgroundColor(DisguiseManager.TYPE_CAMERA.equals(type) ? colorSelected : colorNormal);
+        }
+        if (binding.cardDisguiseWeather != null) {
+            binding.cardDisguiseWeather.setBackgroundColor(DisguiseManager.TYPE_WEATHER.equals(type) ? colorSelected : colorNormal);
+        }
+        if (binding.cardDisguiseMusic != null) {
+            binding.cardDisguiseMusic.setBackgroundColor(DisguiseManager.TYPE_MUSIC.equals(type) ? colorSelected : colorNormal);
+        }
     }
 
     private void setupListeners() {
@@ -142,7 +151,8 @@ public class AppCamouflageBottomSheet extends BottomSheetDialogFragment {
             selectedPackage = "";
             selectedAlias = DisguiseManager.ALIAS_CALCULATOR;
             highlightSelectedPreset(selectedType);
-            updateStatusText(binding.switchEnableCamouflage.isChecked());
+            binding.switchEnableCamouflage.setChecked(true);
+            updateStatusText(true);
         });
 
         binding.cardDisguiseNotes.setOnClickListener(v -> {
@@ -151,7 +161,8 @@ public class AppCamouflageBottomSheet extends BottomSheetDialogFragment {
             selectedPackage = "";
             selectedAlias = DisguiseManager.ALIAS_NOTES;
             highlightSelectedPreset(selectedType);
-            updateStatusText(binding.switchEnableCamouflage.isChecked());
+            binding.switchEnableCamouflage.setChecked(true);
+            updateStatusText(true);
         });
 
         binding.cardDisguiseGame.setOnClickListener(v -> {
@@ -160,7 +171,8 @@ public class AppCamouflageBottomSheet extends BottomSheetDialogFragment {
             selectedPackage = "";
             selectedAlias = DisguiseManager.ALIAS_GAME;
             highlightSelectedPreset(selectedType);
-            updateStatusText(binding.switchEnableCamouflage.isChecked());
+            binding.switchEnableCamouflage.setChecked(true);
+            updateStatusText(true);
         });
 
         binding.cardDisguiseClock.setOnClickListener(v -> {
@@ -169,8 +181,45 @@ public class AppCamouflageBottomSheet extends BottomSheetDialogFragment {
             selectedPackage = "";
             selectedAlias = DisguiseManager.ALIAS_CLOCK;
             highlightSelectedPreset(selectedType);
-            updateStatusText(binding.switchEnableCamouflage.isChecked());
+            binding.switchEnableCamouflage.setChecked(true);
+            updateStatusText(true);
         });
+
+        if (binding.cardDisguiseCamera != null) {
+            binding.cardDisguiseCamera.setOnClickListener(v -> {
+                selectedType = DisguiseManager.TYPE_CAMERA;
+                selectedAppName = "Camera";
+                selectedPackage = "";
+                selectedAlias = DisguiseManager.ALIAS_CAMERA;
+                highlightSelectedPreset(selectedType);
+                binding.switchEnableCamouflage.setChecked(true);
+                updateStatusText(true);
+            });
+        }
+
+        if (binding.cardDisguiseWeather != null) {
+            binding.cardDisguiseWeather.setOnClickListener(v -> {
+                selectedType = DisguiseManager.TYPE_WEATHER;
+                selectedAppName = "Weather";
+                selectedPackage = "";
+                selectedAlias = DisguiseManager.ALIAS_WEATHER;
+                highlightSelectedPreset(selectedType);
+                binding.switchEnableCamouflage.setChecked(true);
+                updateStatusText(true);
+            });
+        }
+
+        if (binding.cardDisguiseMusic != null) {
+            binding.cardDisguiseMusic.setOnClickListener(v -> {
+                selectedType = DisguiseManager.TYPE_MUSIC;
+                selectedAppName = "Music";
+                selectedPackage = "";
+                selectedAlias = DisguiseManager.ALIAS_MUSIC;
+                highlightSelectedPreset(selectedType);
+                binding.switchEnableCamouflage.setChecked(true);
+                updateStatusText(true);
+            });
+        }
 
         binding.btnPickInstalledApp.setOnClickListener(v -> showInstalledAppPickerDialog());
         binding.cardAddCustomApp.setOnClickListener(v -> showInstalledAppPickerDialog());
@@ -185,33 +234,18 @@ public class AppCamouflageBottomSheet extends BottomSheetDialogFragment {
                     selectedAppName = binding.etCustomAppName.getText().toString().trim();
                 }
 
-                // Prompt user with fingerprint or face/PIN verification before saving disguise settings
-                SecurityHelper.authenticate(requireActivity(), "Disguise Verification", "Verify Fingerprint, Face, or PIN to save disguise", new SecurityHelper.AuthCallback() {
-                    @Override
-                    public void onSuccess() {
-                        if (isAdded() && getContext() != null) {
-                            DisguiseManager.getInstance().enableDisguise(
-                                    requireContext(),
-                                    selectedType,
-                                    selectedAppName,
-                                    selectedPackage,
-                                    selectedAlias
-                            );
-                            Toast.makeText(requireContext(), "Disguise Applied! Saved as " + selectedAppName, Toast.LENGTH_LONG).show();
-                            dismiss();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(String errorMessage) {
-                        if (isAdded() && getContext() != null) {
-                            Toast.makeText(requireContext(), "Authentication required: " + errorMessage, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                DisguiseManager.getInstance().enableDisguise(
+                        requireContext(),
+                        selectedType,
+                        selectedAppName,
+                        selectedPackage,
+                        selectedAlias
+                );
+                Toast.makeText(requireContext(), "Mobile Launcher Icon Changed to " + selectedAppName + "!", Toast.LENGTH_LONG).show();
+                dismiss();
             } else {
                 DisguiseManager.getInstance().disableDisguise(context);
-                Toast.makeText(context, "Camouflage Disabled! Default NexaChat restored.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Default App Icon & Name Restored!", Toast.LENGTH_SHORT).show();
                 dismiss();
             }
         });

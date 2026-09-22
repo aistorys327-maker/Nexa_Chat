@@ -34,9 +34,9 @@
     <string name="btn_grant_contacts_permission">Enable Contacts</string>
     
     <!-- Home & Navigation -->
-    <string name="tab_chats">Chat</string>
-    <string name="tab_update">Update</string>
-    <string name="tab_group">Group</string>
+    <string name="tab_chats">Chats</string>
+    <string name="tab_update">Status</string>
+    <string name="tab_group">Groups</string>
     <string name="tab_calls">Calls</string>
     <string name="tab_my_apps">My Apps</string>
     <string name="tab_profile">Profile</string>
